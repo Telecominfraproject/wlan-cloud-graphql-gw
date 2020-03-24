@@ -1,0 +1,23 @@
+{
+  "name": "tip-wlan-graphql-apollo",
+  "version": "0.1.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "apollo-server": "^2.11.0",
+    "graphql": "^14.6.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "start": "node src/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://sean_macfarlane@bitbucket.org/connectustechnologies/tip-wlan-graphql-apollo.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "homepage": "https://bitbucket.org/connectustechnologies/tip-wlan-graphql-apollo#readme"
+}

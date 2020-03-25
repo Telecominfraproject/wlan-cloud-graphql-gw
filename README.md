@@ -1,4 +1,4 @@
-# ConnectUs Apollo Server
+# TIP WLAN Apollo Server
 
 ## Set up environment:
 		

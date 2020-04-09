@@ -1,4 +1,4 @@
-# TIP WLAN Apollo Server
+# TIP WLAN Cloud Apollo Server
 
 ## Set up environment:
 		

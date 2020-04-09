@@ -1,23 +1,30 @@
 {
-  "name": "tip-wlan-graphql-apollo",
+  "name": "wlan-cloud-graphql-apollo",
   "version": "0.1.0",
   "description": "",
   "main": "index.js",
   "dependencies": {
+    "apollo-datasource-rest": "^0.8.1",
     "apollo-server": "^2.11.0",
     "graphql": "^14.6.0"
   },
-  "devDependencies": {},
-  "scripts": {
-    "start": "node src/index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+  "devDependencies": {
+    "babel-eslint": "^10.1.0",
+    "cross-env": "^7.0.2",
+    "eslint": "^6.8.0",
+    "eslint-config-airbnb": "^18.1.0",
+    "eslint-config-prettier": "^6.10.1",
+    "eslint-plugin-graphql": "^3.1.1",
+    "eslint-plugin-prettier": "^3.1.2",
+    "esm": "^3.2.25",
+    "prettier": "^2.0.4"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://sean_macfarlane@bitbucket.org/connectustechnologies/tip-wlan-graphql-apollo.git"
+  "scripts": {
+    "start": "NODE_ENV=development node -r esm src/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "format": "prettier --write \"src/**/*.js\"",
+    "eslint-fix": "eslint --fix . --ext .js --ext .gql --ext .graphql --max-warnings=0"
   },
   "keywords": [],
-  "author": "",
-  "license": "MIT",
-  "homepage": "https://bitbucket.org/connectustechnologies/tip-wlan-graphql-apollo#readme"
+  "author": ""
 }

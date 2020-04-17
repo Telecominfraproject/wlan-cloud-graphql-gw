@@ -49,13 +49,12 @@ jobs:
       - name: Build image
         run: docker build . --file Dockerfile --tag image
         
-      - name: Login to TIP Docker registry 
-        uses: azure/docker-login@v1
-        with:
-          login-server: $DOCKER_REPO
-          username: build-pipeline
-          password: ${{ secrets.REPO_PASSWORD }}
-          
+      - name: Login to Docker Hub
+        env:
+          DOCKER_PASSWORD: ${{ secrets.REPO_PASSWORD }}
+        run: |
+          echo "${DOCKER_PASSWORD}" | docker login --username "build-pipeline" --password-stdin   
+
       - name: Push image
         run: |
           IMAGE_ID=$DOCKER_REPO/$IMAGE_NAME

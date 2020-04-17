@@ -53,7 +53,7 @@ jobs:
         env:
           DOCKER_PASSWORD: ${{ secrets.REPO_PASSWORD }}
         run: |
-          echo "${DOCKER_PASSWORD}" | docker login --username "build-pipeline" --password-stdin   
+          echo "${DOCKER_PASSWORD}" | docker login $DOCKER_REPO --username "build-pipeline" --password-stdin   
 
       - name: Push image
         run: |

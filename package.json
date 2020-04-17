@@ -21,6 +21,7 @@
   },
   "scripts": {
     "start": "NODE_ENV=development node -r esm src/index.js",
+    "prod": "node -r esm src/index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "format": "prettier --write \"src/**/*.js\"",
     "eslint-fix": "eslint --fix . --ext .js --ext .gql --ext .graphql --max-warnings=0"

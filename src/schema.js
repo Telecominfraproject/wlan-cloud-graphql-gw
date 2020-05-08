@@ -7,12 +7,12 @@ const typeDefs = gql`
   type Query {
     me: User
 
-    getCustomer(customerId: String!): Customer
+    getCustomer(customerId: Int!): Customer
     findCustomer: [Customer]
 
-    getLocation(locationId: String!): Location
-    deleteLocation(locationId: String!): Location
-    getAllLocations(customerId: String!): [Location]
+    getLocation(locationId: Int!): Location
+    deleteLocation(locationId: Int!): Location
+    getAllLocations(customerId: Int!): [Location]
   }
 
   type User {
@@ -21,7 +21,7 @@ const typeDefs = gql`
   }
 
   type Customer {
-    id: String!
+    id: Int!
     name: String!
   }
 
@@ -32,10 +32,10 @@ const typeDefs = gql`
   }
 
   type Location {
-    id: String!
+    id: Int!
     locationType: String!
-    customerId: String!
-    parentId: String!
+    customerId: Int!
+    parentId: Int!
     name: String!
   }
 
@@ -44,17 +44,17 @@ const typeDefs = gql`
     updateToken(refreshToken: String!): Token
 
     createLocation(
-      id: String
+      id: Int!
       locationType: String!
-      customerId: String!
-      parentId: String!
+      customerId: Int!
+      parentId: Int!
       name: String!
     ): Location
     updateLocation(
-      id: String
+      id: Int!
       locationType: String!
-      customerId: String!
-      parentId: String!
+      customerId: Int!
+      parentId: Int!
       name: String!
     ): Location
   }

@@ -18,17 +18,47 @@ export class API extends RESTDataSource {
       password,
     });
   }
-
   async updateToken(refreshToken) {
     return this.post('management/v1/oauth2/refreshToken', {
       refreshToken,
     });
   }
 
+  async getCustomer(customerId) {
+    return this.get('portal/customer', {
+      customerId,
+    });
+  }
   async findCustomer() {
     return this.get('portal/customer/find', {
       criteria: '',
       maxResults: 10,
+    });
+  }
+
+  async createLocation(location) {
+    return this.post('portal/location', {
+      ...location,
+    });
+  }
+  async getLocation(locationId) {
+    return this.get('portal/location', {
+      locationId,
+    });
+  }
+  async updateLocation(location) {
+    return this.put('portal/location', {
+      ...location,
+    });
+  }
+  async deleteLocation(locationId) {
+    return this.delete('portal/location', {
+      locationId,
+    });
+  }
+  async getAllLocations(customerId) {
+    return this.get('portal/location/allForCustomer', {
+      customerId,
     });
   }
 }

@@ -2,18 +2,28 @@
 // schema. This resolver retrieves books from the "books" array above.
 const resolvers = {
   Query: {
-    getCustomer: async (_, { customerId }, { dataSources }) => {
-      return dataSources.api.getCustomer(customerId);
+    getUser: async (_, { id }, { dataSources }) => {
+      return dataSources.api.getUser(id);
+    },
+    deleteUser: async (_, { id }, { dataSources }) => {
+      return dataSources.api.deleteUser(id);
+    },
+    getAllUsers: async (_, { customerId }, { dataSources }) => {
+      return dataSources.api.getAllUsers(customerId);
+    },
+
+    getCustomer: async (_, { id }, { dataSources }) => {
+      return dataSources.api.getCustomer(id);
     },
     findCustomer: async (_, {}, { dataSources }) => {
       return dataSources.api.findCustomer();
     },
 
-    getLocation: async (_, { locationId }, { dataSources }) => {
-      return dataSources.api.getLocation(locationId);
+    getLocation: async (_, { id }, { dataSources }) => {
+      return dataSources.api.getLocation(id);
     },
-    deleteLocation: async (_, { locationId }, { dataSources }) => {
-      return dataSources.api.deleteLocation(locationId);
+    deleteLocation: async (_, { id }, { dataSources }) => {
+      return dataSources.api.deleteLocation(id);
     },
     getAllLocations: async (_, { customerId }, { dataSources }) => {
       return dataSources.api.getAllLocations(customerId);
@@ -25,6 +35,13 @@ const resolvers = {
     },
     updateToken: async (_, { refreshToken }, { dataSources }) => {
       return dataSources.api.updateToken(refreshToken);
+    },
+
+    createUser: async (_, { id, username, password, role }, { dataSources }) => {
+      return dataSources.api.createUser({ id, username, password, role });
+    },
+    updateUser: async (_, { id, username, password, role }, { dataSources }) => {
+      return dataSources.api.updateUser({ id, username, password, role });
     },
 
     createLocation: async (

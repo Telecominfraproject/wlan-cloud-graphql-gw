@@ -24,6 +24,32 @@ export class API extends RESTDataSource {
     });
   }
 
+  async createUser(user) {
+    return this.post('portal/portalUser', {
+      ...user,
+    });
+  }
+  async getUser(portalUserId) {
+    return this.get('portal/portalUser', {
+      portalUserId,
+    });
+  }
+  async updateUser(user) {
+    return this.put('portal/portalUser', {
+      ...user,
+    });
+  }
+  async deleteUser(portalUserId) {
+    return this.delete('portal/portalUser', {
+      portalUserId,
+    });
+  }
+  async getAllUsers(customerId) {
+    return this.get('portal/portalUser/forCustomer', {
+      customerId,
+    });
+  }
+
   async getCustomer(customerId) {
     return this.get('portal/customer', {
       customerId,

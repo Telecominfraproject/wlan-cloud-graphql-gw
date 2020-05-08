@@ -5,18 +5,22 @@ const { gql } = require('apollo-server');
 // your data.
 const typeDefs = gql`
   type Query {
-    me: User
+    getUser(id: Int!): User
+    deleteUser(id: Int!): User
+    getAllUsers(customerId: Int!): [User]
 
-    getCustomer(customerId: Int!): Customer
+    getCustomer(id: Int!): Customer
     findCustomer: [Customer]
 
-    getLocation(locationId: Int!): Location
-    deleteLocation(locationId: Int!): Location
+    getLocation(id: Int!): Location
+    deleteLocation(id: Int!): Location
     getAllLocations(customerId: Int!): [Location]
   }
 
   type User {
-    email: String!
+    id: Int!
+    username: String!
+    password: String
     role: String!
   }
 
@@ -43,8 +47,19 @@ const typeDefs = gql`
     authenticateUser(email: String!, password: String!): Token
     updateToken(refreshToken: String!): Token
 
-    createLocation(
+    createUser(
+      username: String!
+      password: String!
+      role: String!
+    ): User
+    updateUser(
       id: Int!
+      username: String!
+      password: String!
+      role: String!
+    ): User
+
+    createLocation(
       locationType: String!
       customerId: Int!
       parentId: Int!

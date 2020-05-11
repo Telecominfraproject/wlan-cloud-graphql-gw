@@ -4,6 +4,8 @@ const { gql } = require('apollo-server');
 // that together define the "shape" of queries that are executed against
 // your data.
 const typeDefs = gql`
+  scalar JSONObject
+
   type Query {
     getUser(id: Int!): User
     deleteUser(id: Int!): User
@@ -15,16 +17,20 @@ const typeDefs = gql`
     getLocation(id: Int!): Location
     deleteLocation(id: Int!): Location
     getAllLocations(customerId: Int!): [Location]
+
+    getEquipment(id: Int!): Equipment
+    deleteEquipment(id: Int!): Equipment
+    getAllEquipment(customerId: Int!): EquipmentPagination
+    filterEquipment(
+      customerId: Int!
+      locationIds: [Int]
+      equipmentType: String
+    ): EquipmentPagination
   }
 
   type PaginationContext {
     model_type: String!
     maxItemsPerPage: Int!
-  }
-
-  type UserPagination {
-    items: [User]
-    context: PaginationContext
   }
 
   type User {
@@ -34,6 +40,11 @@ const typeDefs = gql`
     role: String!
     customerId: Int!
     lastModifiedTimestamp: String
+  }
+
+  type UserPagination {
+    items: [User]
+    context: PaginationContext
   }
 
   type Customer {
@@ -54,6 +65,26 @@ const typeDefs = gql`
     parentId: Int!
     name: String!
     lastModifiedTimestamp: String
+  }
+
+  type Equipment {
+    id: Int!
+    equipmentType: String!
+    inventoryId: String!
+    customerId: Int!
+    profileId: Int!
+    locationId: Int!
+    name: String!
+    latitude: String
+    longitude: String
+    serial: String
+    lastModifiedTimestamp: String
+    details: JSONObject
+  }
+
+  type EquipmentPagination {
+    items: [Equipment]
+    context: PaginationContext
   }
 
   type Mutation {
@@ -79,6 +110,34 @@ const typeDefs = gql`
       name: String!
       lastModifiedTimestamp: String
     ): Location
+
+    createEquipment(
+      equipmentType: String!
+      inventoryId: String!
+      customerId: Int!
+      profileId: Int!
+      locationId: Int!
+      name: String!
+      latitude: String
+      longitude: String
+      serial: String
+      lastModifiedTimestamp: String
+      details: JSONObject
+    ): Equipment
+    updateEquipment(
+      id: Int!
+      equipmentType: String!
+      inventoryId: String!
+      customerId: Int!
+      profileId: Int!
+      locationId: Int!
+      name: String!
+      latitude: String
+      longitude: String
+      serial: String
+      lastModifiedTimestamp: String
+      details: JSONObject
+    ): Equipment
   }
 `;
 

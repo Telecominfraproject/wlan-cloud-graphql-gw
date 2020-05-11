@@ -1,6 +1,8 @@
-// Resolvers define the technique for fetching the types defined in the
-// schema. This resolver retrieves books from the "books" array above.
+// Resolvers define the technique for fetching the types defined in the schema.
+import { GraphQLJSONObject } from 'graphql-type-json';
+
 const resolvers = {
+  JSONObject: GraphQLJSONObject,
   Query: {
     getUser: async (_, { id }, { dataSources }) => {
       return dataSources.api.getUser(id);
@@ -28,6 +30,19 @@ const resolvers = {
     getAllLocations: async (_, { customerId }, { dataSources }) => {
       return dataSources.api.getAllLocations(customerId);
     },
+
+    getEquipment: async (_, { id }, { dataSources }) => {
+      return dataSources.api.getEquipment(id);
+    },
+    deleteEquipment: async (_, { id }, { dataSources }) => {
+      return dataSources.api.deleteEquipment(id);
+    },
+    getAllEquipment: async (_, { customerId }, { dataSources }) => {
+      return dataSources.api.getAllEquipment(customerId);
+    },
+    filterEquipment: async (_, { customerId, locationIds, equipmentType }, { dataSources }) => {
+      return dataSources.api.filterEquipment(customerId, locationIds, equipmentType);
+    },
   },
   Mutation: {
     authenticateUser: async (_, { email, password }, { dataSources }) => {
@@ -37,8 +52,8 @@ const resolvers = {
       return dataSources.api.updateToken(refreshToken);
     },
 
-    createUser: async (_, { id, username, password, role, customerId }, { dataSources }) => {
-      return dataSources.api.createUser({ id, username, password, role, customerId });
+    createUser: async (_, { username, password, role, customerId }, { dataSources }) => {
+      return dataSources.api.createUser({ username, password, role, customerId });
     },
     updateUser: async (
       _,
@@ -55,12 +70,8 @@ const resolvers = {
       });
     },
 
-    createLocation: async (
-      _,
-      { id, locationType, customerId, parentId, name },
-      { dataSources }
-    ) => {
-      return dataSources.api.createLocation({ id, locationType, customerId, parentId, name });
+    createLocation: async (_, { locationType, customerId, parentId, name }, { dataSources }) => {
+      return dataSources.api.createLocation({ locationType, customerId, parentId, name });
     },
     updateLocation: async (
       _,
@@ -74,6 +85,69 @@ const resolvers = {
         parentId,
         name,
         lastModifiedTimestamp,
+      });
+    },
+
+    createEquipment: async (
+      _,
+      {
+        equipmentType,
+        inventoryId,
+        customerId,
+        profileId,
+        locationId,
+        name,
+        latitude,
+        longitude,
+        serial,
+        details,
+      },
+      { dataSources }
+    ) => {
+      return dataSources.api.createEquipment({
+        equipmentType,
+        inventoryId,
+        customerId,
+        profileId,
+        locationId,
+        name,
+        latitude,
+        longitude,
+        serial,
+        details,
+      });
+    },
+    updateEquipment: async (
+      _,
+      {
+        id,
+        equipmentType,
+        inventoryId,
+        customerId,
+        profileId,
+        locationId,
+        name,
+        latitude,
+        longitude,
+        serial,
+        lastModifiedTimestamp,
+        details,
+      },
+      { dataSources }
+    ) => {
+      return dataSources.api.updateEquipment({
+        id,
+        equipmentType,
+        inventoryId,
+        customerId,
+        profileId,
+        locationId,
+        name,
+        latitude,
+        longitude,
+        serial,
+        lastModifiedTimestamp,
+        details,
       });
     },
   },

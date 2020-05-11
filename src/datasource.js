@@ -91,4 +91,45 @@ export class API extends RESTDataSource {
       customerId,
     });
   }
+
+  async createEquipment(equipment) {
+    return this.post('portal/equipment', {
+      ...equipment,
+    });
+  }
+  async getEquipment(equipmentId) {
+    return this.get('portal/equipment', {
+      equipmentId,
+    });
+  }
+  async updateEquipment(equipment) {
+    return this.put('portal/equipment', {
+      ...equipment,
+    });
+  }
+  async deleteEquipment(equipmentId) {
+    return this.delete('portal/equipment', {
+      equipmentId,
+    });
+  }
+  async getAllEquipment(customerId) {
+    return this.get('portal/equipment/forCustomer', {
+      customerId,
+      paginationContext: JSON.stringify({
+        model_type: 'PaginationContext',
+        maxItemsPerPage: 20,
+      }),
+    });
+  }
+  async filterEquipment(customerId, locationIds, equipmentType) {
+    return this.get('portal/equipment/forCustomerWithFilter', {
+      customerId,
+      locationIds,
+      equipmentType,
+      paginationContext: JSON.stringify({
+        model_type: 'PaginationContext',
+        maxItemsPerPage: 20,
+      }),
+    });
+  }
 }

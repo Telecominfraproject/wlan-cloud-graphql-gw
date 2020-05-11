@@ -47,6 +47,10 @@ export class API extends RESTDataSource {
   async getAllUsers(customerId) {
     return this.get('portal/portalUser/forCustomer', {
       customerId,
+      paginationContext: JSON.stringify({
+        model_type: 'PaginationContext',
+        maxItemsPerPage: 20,
+      }),
     });
   }
 

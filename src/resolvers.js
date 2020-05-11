@@ -37,11 +37,22 @@ const resolvers = {
       return dataSources.api.updateToken(refreshToken);
     },
 
-    createUser: async (_, { id, username, password, role }, { dataSources }) => {
-      return dataSources.api.createUser({ id, username, password, role });
+    createUser: async (_, { id, username, password, role, customerId }, { dataSources }) => {
+      return dataSources.api.createUser({ id, username, password, role, customerId });
     },
-    updateUser: async (_, { id, username, password, role }, { dataSources }) => {
-      return dataSources.api.updateUser({ id, username, password, role });
+    updateUser: async (
+      _,
+      { id, username, password, role, customerId, lastModifiedTimestamp },
+      { dataSources }
+    ) => {
+      return dataSources.api.updateUser({
+        id,
+        username,
+        password,
+        role,
+        customerId,
+        lastModifiedTimestamp,
+      });
     },
 
     createLocation: async (
@@ -53,10 +64,17 @@ const resolvers = {
     },
     updateLocation: async (
       _,
-      { id, locationType, customerId, parentId, name },
+      { id, locationType, customerId, parentId, name, lastModifiedTimestamp },
       { dataSources }
     ) => {
-      return dataSources.api.updateLocation({ id, locationType, customerId, parentId, name });
+      return dataSources.api.updateLocation({
+        id,
+        locationType,
+        customerId,
+        parentId,
+        name,
+        lastModifiedTimestamp,
+      });
     },
   },
 };

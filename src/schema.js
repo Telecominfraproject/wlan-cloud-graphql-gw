@@ -7,7 +7,7 @@ const typeDefs = gql`
   type Query {
     getUser(id: Int!): User
     deleteUser(id: Int!): User
-    getAllUsers(customerId: Int!): [User]
+    getAllUsers(customerId: Int!): UserPagination
 
     getCustomer(id: Int!): Customer
     findCustomer: [Customer]
@@ -17,11 +17,23 @@ const typeDefs = gql`
     getAllLocations(customerId: Int!): [Location]
   }
 
+  type PaginationContext {
+    model_type: String!
+    maxItemsPerPage: Int!
+  }
+
+  type UserPagination {
+    items: [User]
+    context: PaginationContext
+  }
+
   type User {
     id: Int!
     username: String!
     password: String
     role: String!
+    customerId: Int!
+    lastModifiedTimestamp: String
   }
 
   type Customer {
@@ -41,36 +53,31 @@ const typeDefs = gql`
     customerId: Int!
     parentId: Int!
     name: String!
+    lastModifiedTimestamp: String
   }
 
   type Mutation {
     authenticateUser(email: String!, password: String!): Token
     updateToken(refreshToken: String!): Token
 
-    createUser(
-      username: String!
-      password: String!
-      role: String!
-    ): User
+    createUser(username: String!, password: String!, role: String!, customerId: Int!): User
     updateUser(
       id: Int!
       username: String!
       password: String!
       role: String!
+      customerId: Int!
+      lastModifiedTimestamp: String
     ): User
 
-    createLocation(
-      locationType: String!
-      customerId: Int!
-      parentId: Int!
-      name: String!
-    ): Location
+    createLocation(locationType: String!, customerId: Int!, parentId: Int!, name: String!): Location
     updateLocation(
       id: Int!
       locationType: String!
       customerId: Int!
       parentId: Int!
       name: String!
+      lastModifiedTimestamp: String
     ): Location
   }
 `;

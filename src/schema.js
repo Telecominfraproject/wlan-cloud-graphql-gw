@@ -31,6 +31,9 @@ const typeDefs = gql`
   type PaginationContext {
     model_type: String!
     maxItemsPerPage: Int!
+    lastReturnedPageNumber: Int
+    totalItemsReturned: Int
+    isLastPage: Boolean
   }
 
   type User {

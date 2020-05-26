@@ -132,4 +132,34 @@ export class API extends RESTDataSource {
       }),
     });
   }
+
+  async createProfile(profile) {
+    return this.post('portal/profile', {
+      ...profile,
+    });
+  }
+  async getProfile(profileId) {
+    return this.get('portal/profile', {
+      profileId,
+    });
+  }
+  async updateProfile(profile) {
+    return this.put('portal/profile', {
+      ...profile,
+    });
+  }
+  async deleteProfile(profileId) {
+    return this.delete('portal/profile', {
+      profileId,
+    });
+  }
+  async getAllProfiles(customerId) {
+    return this.get('portal/profile/forCustomer', {
+      customerId,
+      paginationContext: JSON.stringify({
+        model_type: 'PaginationContext',
+        maxItemsPerPage: 20,
+      }),
+    });
+  }
 }

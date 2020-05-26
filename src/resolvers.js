@@ -43,6 +43,16 @@ const resolvers = {
     filterEquipment: async (_, { customerId, locationIds, equipmentType }, { dataSources }) => {
       return dataSources.api.filterEquipment(customerId, locationIds, equipmentType);
     },
+
+    getProfile: async (_, { id }, { dataSources }) => {
+      return dataSources.api.getProfile(id);
+    },
+    deleteProfile: async (_, { id }, { dataSources }) => {
+      return dataSources.api.deleteProfile(id);
+    },
+    getAllProfiles: async (_, { customerId }, { dataSources }) => {
+      return dataSources.api.getAllProfiles(customerId);
+    },
   },
   Mutation: {
     authenticateUser: async (_, { email, password }, { dataSources }) => {
@@ -146,6 +156,35 @@ const resolvers = {
         latitude,
         longitude,
         serial,
+        lastModifiedTimestamp,
+        details,
+      });
+    },
+
+    createProfile: async (
+      _,
+      { profileType, customerId, name, childProfileIds, detailss },
+      { dataSources }
+    ) => {
+      return dataSources.api.createProfile({
+        profileType,
+        customerId,
+        name,
+        childProfileIds,
+        details,
+      });
+    },
+    updateProfile: async (
+      _,
+      { id, profileType, customerId, name, childProfileIds, lastModifiedTimestamp, details },
+      { dataSources }
+    ) => {
+      return dataSources.api.updateProfile({
+        id,
+        profileType,
+        customerId,
+        name,
+        childProfileIds,
         lastModifiedTimestamp,
         details,
       });

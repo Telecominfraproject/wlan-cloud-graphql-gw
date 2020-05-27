@@ -9,7 +9,7 @@ const typeDefs = gql`
   type Query {
     getUser(id: Int!): User
     deleteUser(id: Int!): User
-    getAllUsers(customerId: Int!): UserPagination
+    getAllUsers(customerId: Int!, cursor: String, limit: Int): UserPagination
 
     getCustomer(id: Int!): Customer
     findCustomer: [Customer]
@@ -25,6 +25,8 @@ const typeDefs = gql`
       customerId: Int!
       locationIds: [Int]
       equipmentType: String
+      cursor: String
+      limit: Int
     ): EquipmentPagination
   }
 
@@ -33,7 +35,8 @@ const typeDefs = gql`
     maxItemsPerPage: Int!
     lastReturnedPageNumber: Int
     totalItemsReturned: Int
-    isLastPage: Boolean
+    lastPage: Boolean
+    cursor: String
   }
 
   type User {

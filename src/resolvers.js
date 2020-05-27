@@ -10,8 +10,8 @@ const resolvers = {
     deleteUser: async (_, { id }, { dataSources }) => {
       return dataSources.api.deleteUser(id);
     },
-    getAllUsers: async (_, { customerId }, { dataSources }) => {
-      return dataSources.api.getAllUsers(customerId);
+    getAllUsers: async (_, { customerId, cursor, limit }, { dataSources }) => {
+      return dataSources.api.getAllUsers(customerId, cursor, limit);
     },
 
     getCustomer: async (_, { id }, { dataSources }) => {
@@ -40,8 +40,12 @@ const resolvers = {
     getAllEquipment: async (_, { customerId }, { dataSources }) => {
       return dataSources.api.getAllEquipment(customerId);
     },
-    filterEquipment: async (_, { customerId, locationIds, equipmentType }, { dataSources }) => {
-      return dataSources.api.filterEquipment(customerId, locationIds, equipmentType);
+    filterEquipment: async (
+      _,
+      { customerId, locationIds, equipmentType, cursor, limit },
+      { dataSources }
+    ) => {
+      return dataSources.api.filterEquipment(customerId, locationIds, equipmentType, cursor, limit);
     },
   },
   Mutation: {

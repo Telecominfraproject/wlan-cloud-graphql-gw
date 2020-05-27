@@ -1,5 +1,12 @@
 import { RESTDataSource } from 'apollo-datasource-rest';
 
+const buildPaginationContext = (cursor, limit) =>
+  JSON.stringify({
+    model_type: 'PaginationContext',
+    maxItemsPerPage: limit,
+    cursor,
+  });
+
 export class API extends RESTDataSource {
   get baseURL() {
     if (process.env.NODE_ENV !== 'production') {
@@ -44,13 +51,10 @@ export class API extends RESTDataSource {
       portalUserId,
     });
   }
-  async getAllUsers(customerId) {
+  async getAllUsers(customerId, cursor, limit) {
     return this.get('portal/portalUser/forCustomer', {
       customerId,
-      paginationContext: JSON.stringify({
-        model_type: 'PaginationContext',
-        maxItemsPerPage: 20,
-      }),
+      paginationContext: buildPaginationContext(cursor, limit),
     });
   }
 
@@ -121,15 +125,12 @@ export class API extends RESTDataSource {
       }),
     });
   }
-  async filterEquipment(customerId, locationIds, equipmentType) {
+  async filterEquipment(customerId, locationIds, equipmentType, cursor, limit) {
     return this.get('portal/equipment/forCustomerWithFilter', {
       customerId,
       locationIds,
       equipmentType,
-      paginationContext: JSON.stringify({
-        model_type: 'PaginationContext',
-        maxItemsPerPage: 20,
-      }),
+      paginationContext: buildPaginationContext(cursor, limit),
     });
   }
 }

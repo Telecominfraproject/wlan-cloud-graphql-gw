@@ -57,6 +57,10 @@ const resolvers = {
     getAllProfiles: async (_, { customerId }, { dataSources }) => {
       return dataSources.api.getAllProfiles(customerId);
     },
+
+    getAllAlarms: async (_, { customerId, cursor, limit }, { dataSources }) => {
+      return dataSources.api.getAllAlarms(customerId);
+    },
   },
   Mutation: {
     authenticateUser: async (_, { email, password }, { dataSources }) => {

@@ -20,7 +20,7 @@ const typeDefs = gql`
 
     getEquipment(id: Int!): Equipment
     deleteEquipment(id: Int!): Equipment
-    getAllEquipment(customerId: Int!): EquipmentPagination
+    getAllEquipment(customerId: Int!, cursor: String, limit: Int): EquipmentPagination
     filterEquipment(
       customerId: Int!
       locationIds: [Int]
@@ -31,7 +31,7 @@ const typeDefs = gql`
 
     getProfile(id: Int!): Profile
     deleteProfile(id: Int!): Profile
-    getAllProfiles(customerId: Int!): ProfilePagination
+    getAllProfiles(customerId: Int!, cursor: String, limit: Int): ProfilePagination
 
     getAllAlarms(customerId: Int!, cursor: String, limit: Int): AlarmPagination
   }

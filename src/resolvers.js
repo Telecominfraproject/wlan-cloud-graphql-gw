@@ -37,8 +37,8 @@ const resolvers = {
     deleteEquipment: async (_, { id }, { dataSources }) => {
       return dataSources.api.deleteEquipment(id);
     },
-    getAllEquipment: async (_, { customerId }, { dataSources }) => {
-      return dataSources.api.getAllEquipment(customerId);
+    getAllEquipment: async (_, { customerId, cursor, limit }, { dataSources }) => {
+      return dataSources.api.getAllEquipment(customerId, cursor, limit);
     },
     filterEquipment: async (
       _,
@@ -54,8 +54,8 @@ const resolvers = {
     deleteProfile: async (_, { id }, { dataSources }) => {
       return dataSources.api.deleteProfile(id);
     },
-    getAllProfiles: async (_, { customerId }, { dataSources }) => {
-      return dataSources.api.getAllProfiles(customerId);
+    getAllProfiles: async (_, { customerId, cursor, limit }, { dataSources }) => {
+      return dataSources.api.getAllProfiles(customerId, cursor, limit);
     },
 
     getAllAlarms: async (_, { customerId, cursor, limit }, { dataSources }) => {

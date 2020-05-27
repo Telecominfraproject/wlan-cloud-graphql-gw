@@ -116,13 +116,10 @@ export class API extends RESTDataSource {
       equipmentId,
     });
   }
-  async getAllEquipment(customerId) {
+  async getAllEquipment(customerId, cursor, limit) {
     return this.get('portal/equipment/forCustomer', {
       customerId,
-      paginationContext: JSON.stringify({
-        model_type: 'PaginationContext',
-        maxItemsPerPage: 20,
-      }),
+      paginationContext: buildPaginationContext(cursor, limit),
     });
   }
   async filterEquipment(customerId, locationIds, equipmentType, cursor, limit) {
@@ -154,13 +151,10 @@ export class API extends RESTDataSource {
       profileId,
     });
   }
-  async getAllProfiles(customerId) {
+  async getAllProfiles(customerId, cursor, limit) {
     return this.get('portal/profile/forCustomer', {
       customerId,
-      paginationContext: JSON.stringify({
-        model_type: 'PaginationContext',
-        maxItemsPerPage: 20,
-      }),
+      paginationContext: buildPaginationContext(cursor, limit),
     });
   }
 

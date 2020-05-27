@@ -28,6 +28,10 @@ const typeDefs = gql`
       cursor: String
       limit: Int
     ): EquipmentPagination
+
+    getProfile(id: Int!): Profile
+    deleteProfile(id: Int!): Profile
+    getAllProfiles(customerId: Int!): ProfilePagination
   }
 
   type PaginationContext {
@@ -93,6 +97,21 @@ const typeDefs = gql`
     context: PaginationContext
   }
 
+  type Profile {
+    id: Int!
+    profileType: String!
+    customerId: Int!
+    name: String!
+    childProfileIds: [Int]
+    lastModifiedTimestamp: String
+    details: JSONObject
+  }
+
+  type ProfilePagination {
+    items: [Profile]
+    context: PaginationContext
+  }
+
   type Mutation {
     authenticateUser(email: String!, password: String!): Token
     updateToken(refreshToken: String!): Token
@@ -127,7 +146,6 @@ const typeDefs = gql`
       latitude: String
       longitude: String
       serial: String
-      lastModifiedTimestamp: String
       details: JSONObject
     ): Equipment
     updateEquipment(
@@ -144,6 +162,23 @@ const typeDefs = gql`
       lastModifiedTimestamp: String
       details: JSONObject
     ): Equipment
+
+    createProfile(
+      profileType: String!
+      customerId: Int!
+      name: String!
+      childProfileIds: [Int]
+      details: JSONObject
+    ): Profile
+    updateProfile(
+      id: Int!
+      profileType: String!
+      customerId: Int!
+      name: String!
+      childProfileIds: [Int]
+      lastModifiedTimestamp: String
+      details: JSONObject
+    ): Profile
   }
 `;
 

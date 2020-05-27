@@ -32,6 +32,8 @@ const typeDefs = gql`
     getProfile(id: Int!): Profile
     deleteProfile(id: Int!): Profile
     getAllProfiles(customerId: Int!): ProfilePagination
+
+    getAllAlarms(customerId: Int!, cursor: String, limit: Int): AlarmPagination
   }
 
   type PaginationContext {
@@ -109,6 +111,20 @@ const typeDefs = gql`
 
   type ProfilePagination {
     items: [Profile]
+    context: PaginationContext
+  }
+
+  type Alarm {
+    customerId: Int!
+    equipmentId: Int!
+    alarmCode: String!
+    severity: String!
+    lastModifiedTimestamp: String
+    details: JSONObject
+  }
+
+  type AlarmPagination {
+    items: [Alarm]
     context: PaginationContext
   }
 

@@ -163,4 +163,11 @@ export class API extends RESTDataSource {
       }),
     });
   }
+
+  async getAllAlarms(customerId, cursor, limit) {
+    return this.get('portal/alarm/forCustomer', {
+      customerId,
+      paginationContext: buildPaginationContext(cursor, limit),
+    });
+  }
 }

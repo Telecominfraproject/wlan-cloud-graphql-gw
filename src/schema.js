@@ -119,6 +119,7 @@ const typeDefs = gql`
     equipmentId: Int!
     alarmCode: String!
     severity: String!
+    createdTimestamp: String
     lastModifiedTimestamp: String
     details: JSONObject
   }

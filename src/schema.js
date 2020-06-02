@@ -29,6 +29,12 @@ const typeDefs = gql`
       limit: Int
     ): EquipmentPagination
 
+    getEquipmentStatus(
+      customerId: Int!
+      equipmentIds: [Int]
+      statusDataTypes: [String]
+    ): StatusPagination
+
     getProfile(id: Int!): Profile
     deleteProfile(id: Int!): Profile
     getAllProfiles(customerId: Int!, cursor: String, limit: Int): ProfilePagination
@@ -90,13 +96,38 @@ const typeDefs = gql`
     latitude: String
     longitude: String
     serial: String
+    channel: [Int]
     lastModifiedTimestamp: String
-    details: JSONObject
+    profile: Profile
+    status: StatusPagination
   }
 
   type EquipmentPagination {
     items: [Equipment]
     context: PaginationContext
+  }
+
+  type StatusPagination {
+    protocol: Status
+    radioUtilization: Status
+    osPerformance: Status
+    clientDetails: Status
+  }
+
+  type Status {
+    customerId: Int!
+    statusDataType: String
+    lastModifiedTimestamp: String
+    details: StatusDetails
+  }
+
+  type StatusDetails {
+    reportedIpV4Addr: String
+    reportedMacAddr: String
+    uptimeInSeconds: Int
+    capacityDetails: [Int]
+    noiseFloorDetails: [Int]
+    numClientsPerRadio: [Int]
   }
 
   type Profile {

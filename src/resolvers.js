@@ -48,6 +48,14 @@ const resolvers = {
       return dataSources.api.filterEquipment(customerId, locationIds, equipmentType, cursor, limit);
     },
 
+    getEquipmentStatus: async (
+      _,
+      { customerId, equipmentIds, statusDataTypes },
+      { dataSources }
+    ) => {
+      return dataSources.api.getEquipmentStatus(customerId, equipmentIds, statusDataTypes);
+    },
+
     getProfile: async (_, { id }, { dataSources }) => {
       return dataSources.api.getProfile(id);
     },
@@ -171,7 +179,7 @@ const resolvers = {
 
     createProfile: async (
       _,
-      { profileType, customerId, name, childProfileIds, detailss },
+      { profileType, customerId, name, childProfileIds, details },
       { dataSources }
     ) => {
       return dataSources.api.createProfile({
@@ -196,6 +204,42 @@ const resolvers = {
         lastModifiedTimestamp,
         details,
       });
+    },
+  },
+  Equipment: {
+    profile: ({ profileId }, args, { dataSources }) => {
+      return dataSources.api.getProfile(profileId);
+    },
+    status: ({ customerId, id }, args, { dataSources }) => {
+      return dataSources.api.getEquipmentStatus(
+        customerId,
+        [id],
+        ['PROTOCOL', 'OS_PERFORMANCE', 'RADIO_UTILIZATION', 'CLIENT_DETAILS']
+      );
+    },
+    channel: ({ details }) => {
+      const values = [];
+      Object.keys(details.radioMap).forEach((i) => values.push(details.radioMap[i].channelNumber));
+      return values;
+    },
+  },
+  StatusPagination: {
+    protocol: ({ items }) => items.find((i) => i.statusDataType === 'PROTOCOL'),
+    osPerformance: ({ items }) => items.find((i) => i.statusDataType === 'OS_PERFORMANCE'),
+    radioUtilization: ({ items }) => items.find((i) => i.statusDataType === 'RADIO_UTILIZATION'),
+    clientDetails: ({ items }) => items.find((i) => i.statusDataType === 'CLIENT_DETAILS'),
+  },
+  StatusDetails: {
+    reportedMacAddr: ({ reportedMacAddr }) => reportedMacAddr && reportedMacAddr.addressAsString,
+    capacityDetails: ({ capacityDetails }) => {
+      const values = [];
+      Object.keys(capacityDetails).forEach((i) => values.push(capacityDetails[i].usedCapacity));
+      return values;
+    },
+    noiseFloorDetails: ({ avgNoiseFloor }) => {
+      const values = [];
+      Object.keys(avgNoiseFloor).forEach((i) => values.push(avgNoiseFloor[i]));
+      return values;
     },
   },
 };

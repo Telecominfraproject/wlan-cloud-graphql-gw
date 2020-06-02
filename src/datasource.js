@@ -131,6 +131,15 @@ export class API extends RESTDataSource {
     });
   }
 
+  async getEquipmentStatus(customerId, equipmentIds, statusDataTypes) {
+    return this.get('portal/status/forCustomerWithFilter', {
+      customerId,
+      equipmentIds,
+      statusDataTypes,
+      paginationContext: buildPaginationContext(),
+    });
+  }
+
   async createProfile(profile) {
     return this.post('portal/profile', {
       ...profile,

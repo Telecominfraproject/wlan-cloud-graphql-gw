@@ -147,11 +147,11 @@ const typeDefs = gql`
 
   type Alarm {
     customerId: Int!
-    equipmentId: Int!
     alarmCode: String!
     severity: String!
     createdTimestamp: String
     lastModifiedTimestamp: String
+    equipment: Equipment
     details: JSONObject
   }
 

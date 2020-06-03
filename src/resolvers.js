@@ -242,6 +242,11 @@ const resolvers = {
       return values;
     },
   },
+  Alarm: {
+    equipment: ({ equipmentId }, args, { dataSources }) => {
+      return dataSources.api.getEquipment(equipmentId);
+    },
+  },
 };
 
 module.exports = resolvers;

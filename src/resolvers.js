@@ -56,6 +56,10 @@ const resolvers = {
       return dataSources.api.getEquipmentStatus(customerId, equipmentIds, statusDataTypes);
     },
 
+    getAllClientSessions: async (_, { customerId, cursor, limit }, { dataSources }) => {
+      return dataSources.api.getAllClientSessions(customerId, cursor, limit);
+    },
+
     getProfile: async (_, { id }, { dataSources }) => {
       return dataSources.api.getProfile(id);
     },
@@ -240,6 +244,18 @@ const resolvers = {
       const values = [];
       Object.keys(avgNoiseFloor).forEach((i) => values.push(avgNoiseFloor[i]));
       return values;
+    },
+  },
+  ClientSession: {
+    id: ({ details }) => details.sessionId,
+    macAddress: ({ macAddress }) => macAddress.addressAsString,
+    ipAddress: ({ details }) => details.ipAddress,
+    hostname: ({ details }) => details.hostname,
+    ssid: ({ details }) => details.ssid,
+    radioType: ({ details }) => details.radioType,
+    signal: ({ details }) => details.metricDetails.rssi,
+    equipment: ({ equipmentId }, args, { dataSources }) => {
+      return dataSources.api.getEquipment(equipmentId);
     },
   },
   Alarm: {

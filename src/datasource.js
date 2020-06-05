@@ -9,10 +9,10 @@ const buildPaginationContext = (cursor, limit) =>
 
 export class API extends RESTDataSource {
   get baseURL() {
-    if (process.env.NODE_ENV !== 'production') {
+    if (process.env.NODE_ENV !== 'production' && !process.env.API) {
       return 'https://localhost:9091/';
     }
-    return '';
+    return 'https://' + process.env.API + '/';
   }
 
   willSendRequest(request) {
@@ -137,6 +137,13 @@ export class API extends RESTDataSource {
       equipmentIds,
       statusDataTypes,
       paginationContext: buildPaginationContext(),
+    });
+  }
+
+  async getAllClientSessions(customerId, cursor, limit) {
+    return this.get('portal/client/session/forCustomer', {
+      customerId,
+      paginationContext: buildPaginationContext(cursor, limit),
     });
   }
 

@@ -39,6 +39,8 @@ const typeDefs = gql`
     deleteProfile(id: Int!): Profile
     getAllProfiles(customerId: Int!, cursor: String, limit: Int): ProfilePagination
 
+    getAllClientSessions(customerId: Int!, cursor: String, limit: Int): ClientSessionPagination
+
     getAllAlarms(customerId: Int!, cursor: String, limit: Int): AlarmPagination
   }
 
@@ -136,12 +138,32 @@ const typeDefs = gql`
     customerId: Int!
     name: String!
     childProfileIds: [Int]
+    createdTimestamp: String
     lastModifiedTimestamp: String
     details: JSONObject
   }
 
   type ProfilePagination {
     items: [Profile]
+    context: PaginationContext
+  }
+
+  type ClientSession {
+    id: ID
+    customerId: Int!
+    macAddress: String
+    ipAddress: String
+    hostname: String
+    ssid: String
+    radioType: String
+    signal: String
+    lastModifiedTimestamp: String
+    details: JSONObject
+    equipment: Equipment
+  }
+
+  type ClientSessionPagination {
+    items: [ClientSession]
     context: PaginationContext
   }
 
@@ -224,6 +246,7 @@ const typeDefs = gql`
       customerId: Int!
       name: String!
       childProfileIds: [Int]
+      createdTimestamp: String
       lastModifiedTimestamp: String
       details: JSONObject
     ): Profile

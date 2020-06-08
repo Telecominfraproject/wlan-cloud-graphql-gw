@@ -84,6 +84,7 @@ const typeDefs = gql`
     customerId: Int!
     parentId: Int!
     name: String!
+    details: JSONObject
     lastModifiedTimestamp: String
   }
 
@@ -203,6 +204,7 @@ const typeDefs = gql`
       customerId: Int!
       parentId: Int!
       name: String!
+      details: JSONObject
       lastModifiedTimestamp: String
     ): Location
 

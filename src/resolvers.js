@@ -105,7 +105,7 @@ const resolvers = {
     },
     updateLocation: async (
       _,
-      { id, locationType, customerId, parentId, name, lastModifiedTimestamp },
+      { id, locationType, customerId, parentId, name, lastModifiedTimestamp, details },
       { dataSources }
     ) => {
       return dataSources.api.updateLocation({
@@ -115,6 +115,7 @@ const resolvers = {
         parentId,
         name,
         lastModifiedTimestamp,
+        details,
       });
     },
 

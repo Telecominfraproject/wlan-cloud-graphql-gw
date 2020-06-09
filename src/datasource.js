@@ -173,6 +173,11 @@ export class API extends RESTDataSource {
       paginationContext: buildPaginationContext(cursor, limit),
     });
   }
+  async getProfilesById(profileIdSet) {
+    return this.get('portal/profile/inSet', {
+      profileIdSet,
+    });
+  }
 
   async getAllAlarms(customerId, cursor, limit) {
     return this.get('portal/alarm/forCustomer', {

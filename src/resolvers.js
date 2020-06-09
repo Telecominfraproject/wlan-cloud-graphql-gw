@@ -56,6 +56,9 @@ const resolvers = {
       return dataSources.api.getEquipmentStatus(customerId, equipmentIds, statusDataTypes);
     },
 
+    getClientSession: async (_, { customerId, macAddress }, { dataSources }) => {
+      return dataSources.api.getClientSession(customerId, macAddress);
+    },
     getAllClientSessions: async (_, { customerId, cursor, limit }, { dataSources }) => {
       return dataSources.api.getAllClientSessions(customerId, cursor, limit);
     },
@@ -248,7 +251,7 @@ const resolvers = {
     },
   },
   ClientSession: {
-    id: ({ details }) => details.sessionId,
+    id: ({ macAddress }) => macAddress.addressAsString,
     macAddress: ({ macAddress }) => macAddress.addressAsString,
     ipAddress: ({ details }) => details.ipAddress,
     hostname: ({ details }) => details.hostname,

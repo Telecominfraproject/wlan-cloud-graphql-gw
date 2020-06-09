@@ -39,6 +39,7 @@ const typeDefs = gql`
     deleteProfile(id: Int!): Profile
     getAllProfiles(customerId: Int!, cursor: String, limit: Int): ProfilePagination
 
+    getClientSession(customerId: Int!, macAddress: String!): [ClientSession]
     getAllClientSessions(customerId: Int!, cursor: String, limit: Int): ClientSessionPagination
 
     getAllAlarms(customerId: Int!, cursor: String, limit: Int): AlarmPagination

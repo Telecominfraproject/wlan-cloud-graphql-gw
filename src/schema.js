@@ -104,6 +104,7 @@ const typeDefs = gql`
     lastModifiedTimestamp: String
     profile: Profile
     status: StatusPagination
+    details: JSONObject
   }
 
   type EquipmentPagination {
@@ -123,6 +124,7 @@ const typeDefs = gql`
     statusDataType: String
     lastModifiedTimestamp: String
     details: StatusDetails
+    detailsJSON: JSONObject
   }
 
   type StatusDetails {
@@ -139,7 +141,7 @@ const typeDefs = gql`
     profileType: String!
     customerId: Int!
     name: String!
-    childProfileIds: [Int]
+    childProfiles: [Profile]
     createdTimestamp: String
     lastModifiedTimestamp: String
     details: JSONObject

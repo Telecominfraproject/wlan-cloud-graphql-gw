@@ -237,6 +237,9 @@ const resolvers = {
     radioUtilization: ({ items }) => items.find((i) => i.statusDataType === 'RADIO_UTILIZATION'),
     clientDetails: ({ items }) => items.find((i) => i.statusDataType === 'CLIENT_DETAILS'),
   },
+  Status: {
+    detailsJSON: ({ details }) => details,
+  },
   StatusDetails: {
     reportedMacAddr: ({ reportedMacAddr }) => reportedMacAddr && reportedMacAddr.addressAsString,
     capacityDetails: ({ capacityDetails }) => {
@@ -248,6 +251,11 @@ const resolvers = {
       const values = [];
       Object.keys(avgNoiseFloor).forEach((i) => values.push(avgNoiseFloor[i]));
       return values;
+    },
+  },
+  Profile: {
+    childProfiles: ({ childProfileIds }, args, { dataSources }) => {
+      return dataSources.api.getProfilesById(childProfileIds);
     },
   },
   ClientSession: {

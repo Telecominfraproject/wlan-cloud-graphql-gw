@@ -24,9 +24,6 @@ const resolvers = {
     getLocation: async (_, { id }, { dataSources }) => {
       return dataSources.api.getLocation(id);
     },
-    deleteLocation: async (_, { id }, { dataSources }) => {
-      return dataSources.api.deleteLocation(id);
-    },
     getAllLocations: async (_, { customerId }, { dataSources }) => {
       return dataSources.api.getAllLocations(customerId);
     },
@@ -120,6 +117,9 @@ const resolvers = {
         lastModifiedTimestamp,
         details,
       });
+    },
+    deleteLocation: async (_, { id }, { dataSources }) => {
+      return dataSources.api.deleteLocation(id);
     },
 
     createEquipment: async (

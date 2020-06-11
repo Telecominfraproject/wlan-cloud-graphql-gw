@@ -15,7 +15,6 @@ const typeDefs = gql`
     findCustomer: [Customer]
 
     getLocation(id: Int!): Location
-    deleteLocation(id: Int!): Location
     getAllLocations(customerId: Int!): [Location]
 
     getEquipment(id: Int!): Equipment
@@ -210,6 +209,7 @@ const typeDefs = gql`
       details: JSONObject
       lastModifiedTimestamp: String
     ): Location
+    deleteLocation(id: Int!): Location
 
     createEquipment(
       equipmentType: String!

@@ -71,7 +71,23 @@ const resolvers = {
     },
 
     getAllAlarms: async (_, { customerId, cursor, limit }, { dataSources }) => {
-      return dataSources.api.getAllAlarms(customerId);
+      return dataSources.api.getAllAlarms(customerId, cursor, limit);
+    },
+
+    filterServiceMetrics: async (
+      _,
+      { customerId, fromTime, toTime, clientMacs, dataTypes, cursor, limit },
+      { dataSources }
+    ) => {
+      return dataSources.api.filterServiceMetrics(
+        customerId,
+        fromTime,
+        toTime,
+        clientMacs,
+        dataTypes,
+        cursor,
+        limit
+      );
     },
   },
   Mutation: {
@@ -274,6 +290,11 @@ const resolvers = {
     equipment: ({ equipmentId }, args, { dataSources }) => {
       return dataSources.api.getEquipment(equipmentId);
     },
+  },
+  ServiceMetric: {
+    rssi: ({ details }) => details.rssi,
+    rxBytes: ({ details }) => details.rxBytes,
+    txBytes: ({ details }) => details.numTxBytes,
   },
 };
 

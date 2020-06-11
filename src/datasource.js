@@ -191,4 +191,15 @@ export class API extends RESTDataSource {
       paginationContext: buildPaginationContext(cursor, limit),
     });
   }
+
+  async filterServiceMetrics(customerId, fromTime, toTime, clientMacs, dataTypes, cursor, limit) {
+    return this.get('portal/serviceMetric/forCustomer', {
+      customerId,
+      fromTime,
+      toTime,
+      clientMacs,
+      dataTypes,
+      paginationContext: buildPaginationContext(cursor, limit),
+    });
+  }
 }

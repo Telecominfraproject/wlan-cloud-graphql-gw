@@ -42,6 +42,16 @@ const typeDefs = gql`
     getAllClientSessions(customerId: Int!, cursor: String, limit: Int): ClientSessionPagination
 
     getAllAlarms(customerId: Int!, cursor: String, limit: Int): AlarmPagination
+
+    filterServiceMetrics(
+      customerId: Int!
+      fromTime: Int!
+      toTime: Int!
+      clientMacs: [String]
+      dataTypes: [String]
+      cursor: String
+      limit: Int
+    ): ServiceMetricPagination
   }
 
   type PaginationContext {
@@ -167,6 +177,21 @@ const typeDefs = gql`
 
   type ClientSessionPagination {
     items: [ClientSession]
+    context: PaginationContext
+  }
+
+  type ServiceMetric {
+    customerId: Int!
+    equipmentId: Int!
+    dataType: String
+    createdTimestamp: String
+    rssi: Int
+    rxBytes: Int
+    txBytes: Int
+  }
+
+  type ServiceMetricPagination {
+    items: [ServiceMetric]
     context: PaginationContext
   }
 

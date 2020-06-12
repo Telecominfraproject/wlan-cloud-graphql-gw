@@ -146,9 +146,10 @@ export class API extends RESTDataSource {
       clientMacs: [macAddress],
     });
   }
-  async getAllClientSessions(customerId, cursor, limit) {
+  async filterClientSessions(customerId, locationIds, cursor, limit) {
     return this.get('portal/client/session/forCustomer', {
       customerId,
+      locationIds,
       paginationContext: buildPaginationContext(cursor, limit),
     });
   }

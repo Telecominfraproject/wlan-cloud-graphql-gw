@@ -56,8 +56,12 @@ const resolvers = {
     getClientSession: async (_, { customerId, macAddress }, { dataSources }) => {
       return dataSources.api.getClientSession(customerId, macAddress);
     },
-    getAllClientSessions: async (_, { customerId, cursor, limit }, { dataSources }) => {
-      return dataSources.api.getAllClientSessions(customerId, cursor, limit);
+    filterClientSessions: async (
+      _,
+      { customerId, locationIds, cursor, limit },
+      { dataSources }
+    ) => {
+      return dataSources.api.filterClientSessions(customerId, locationIds, cursor, limit);
     },
 
     getProfile: async (_, { id }, { dataSources }) => {

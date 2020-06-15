@@ -204,6 +204,9 @@ const resolvers = {
         details,
       });
     },
+    updateEquipmentBulk: async (_, { items }, { dataSources }) => {
+      return dataSources.api.updateEquipmentBulk(items);
+    },
 
     createProfile: async (
       _,

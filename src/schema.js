@@ -126,6 +126,11 @@ const typeDefs = gql`
     context: PaginationContext
   }
 
+  input EquipmentRrmUpdate {
+    equipmentId: ID
+    perRadioDetails: JSONObject
+  }
+
   type StatusPagination {
     protocol: Status
     radioUtilization: Status
@@ -218,6 +223,11 @@ const typeDefs = gql`
     context: PaginationContext
   }
 
+  type GenericResponse {
+    message: String
+    success: Boolean
+  }
+
   type Mutation {
     authenticateUser(email: String!, password: String!): Token
     updateToken(refreshToken: String!): Token
@@ -270,6 +280,7 @@ const typeDefs = gql`
       lastModifiedTimestamp: String
       details: JSONObject
     ): Equipment
+    updateEquipmentBulk(items: [EquipmentRrmUpdate]): GenericResponse
 
     createProfile(
       profileType: String!

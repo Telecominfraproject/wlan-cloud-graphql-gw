@@ -130,6 +130,11 @@ export class API extends RESTDataSource {
       paginationContext: buildPaginationContext(cursor, limit),
     });
   }
+  async updateEquipmentBulk(items) {
+    return this.put('portal/equipment/rrmBulk', {
+      items,
+    });
+  }
 
   async getEquipmentStatus(customerId, equipmentIds, statusDataTypes) {
     return this.get('portal/status/forCustomerWithFilter', {

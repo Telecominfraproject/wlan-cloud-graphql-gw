@@ -299,6 +299,9 @@ const resolvers = {
     rssi: ({ details }) => details.rssi,
     rxBytes: ({ details }) => details.rxBytes,
     txBytes: ({ details }) => details.numTxBytes,
+    freeMemory: ({ details }) => details.apPerformance.freeMemory,
+    cpuUtilized: ({ details }) => details.apPerformance.cpuUtilized,
+    cpuTemperature: ({ details }) => details.apPerformance.cpuTemperature,
   },
 };
 

@@ -193,6 +193,9 @@ const typeDefs = gql`
     rssi: Int
     rxBytes: Int
     txBytes: Int
+    freeMemory: Int
+    cpuUtilized: [Int]
+    cpuTemperature: Int
   }
 
   type ServiceMetricPagination {

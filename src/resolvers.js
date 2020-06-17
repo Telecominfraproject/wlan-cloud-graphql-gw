@@ -254,8 +254,11 @@ const resolvers = {
       return values;
     },
     model: ({ details }) => details.equipmentModel,
-    alarms: ({ customerId, id }, args, { dataSources }) => {
+    alarmsCount: ({ customerId, id }, args, { dataSources }) => {
       return dataSources.api.getAlarmCount(customerId, [id]);
+    },
+    alarms: ({ customerId, id }, args, { dataSources }) => {
+      return dataSources.api.getAllAlarmsForEquipment(customerId, [id]);
     },
   },
   StatusPagination: {

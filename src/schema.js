@@ -118,7 +118,8 @@ const typeDefs = gql`
     model: String
     lastModifiedTimestamp: String
     profile: Profile
-    alarms: Int
+    alarmsCount: Int
+    alarms: [Alarm]
     status: StatusPagination
     details: JSONObject
   }

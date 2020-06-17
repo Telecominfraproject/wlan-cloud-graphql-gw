@@ -197,6 +197,12 @@ export class API extends RESTDataSource {
       paginationContext: buildPaginationContext(cursor, limit),
     });
   }
+  async getAllAlarmsForEquipment(customerId, equipmentIds) {
+    return this.get('portal/alarm/forEquipment', {
+      customerId,
+      equipmentIds,
+    });
+  }
   async getAlarmCount(customerId, equipmentIds) {
     const alarmCount = await this.get('portal/alarm/counts', {
       customerId,

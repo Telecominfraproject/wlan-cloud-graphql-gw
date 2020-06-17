@@ -115,8 +115,10 @@ const typeDefs = gql`
     longitude: String
     serial: String
     channel: [Int]
+    model: String
     lastModifiedTimestamp: String
     profile: Profile
+    alarms: Int
     status: StatusPagination
     details: JSONObject
   }

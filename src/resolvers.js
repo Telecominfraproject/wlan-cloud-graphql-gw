@@ -253,6 +253,10 @@ const resolvers = {
       Object.keys(details.radioMap).forEach((i) => values.push(details.radioMap[i].channelNumber));
       return values;
     },
+    model: ({ details }) => details.equipmentModel,
+    alarms: ({ customerId, id }, args, { dataSources }) => {
+      return dataSources.api.getAlarmCount(customerId, [id]);
+    },
   },
   StatusPagination: {
     protocol: ({ items }) => items.find((i) => i.statusDataType === 'PROTOCOL'),

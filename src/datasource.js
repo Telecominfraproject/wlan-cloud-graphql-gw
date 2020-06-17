@@ -197,6 +197,19 @@ export class API extends RESTDataSource {
       paginationContext: buildPaginationContext(cursor, limit),
     });
   }
+  async getAlarmCount(customerId, equipmentIds) {
+    const alarmCount = await this.get('portal/alarm/counts', {
+      customerId,
+      equipmentIds,
+    });
+
+    let totalCount = 0;
+    Object.keys(alarmCount.totalCountsPerAlarmCodeMap).forEach(
+      (i) => (totalCount += alarmCount.totalCountsPerAlarmCodeMap[i])
+    );
+
+    return totalCount;
+  }
 
   async filterServiceMetrics(customerId, fromTime, toTime, clientMacs, dataTypes, cursor, limit) {
     return this.get('portal/serviceMetric/forCustomer', {

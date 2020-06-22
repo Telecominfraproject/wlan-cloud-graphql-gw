@@ -57,6 +57,8 @@ const typeDefs = gql`
       cursor: String
       limit: Int
     ): ServiceMetricPagination
+
+    getAllOui: [JSONObject]
   }
 
   type PaginationContext {
@@ -156,6 +158,7 @@ const typeDefs = gql`
     capacityDetails: [Int]
     noiseFloorDetails: [Int]
     numClientsPerRadio: [Int]
+    manufacturer: String
   }
 
   type Profile {
@@ -183,6 +186,7 @@ const typeDefs = gql`
     ssid: String
     radioType: String
     signal: String
+    manufacturer: String
     lastModifiedTimestamp: String
     details: JSONObject
     equipment: Equipment

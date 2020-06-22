@@ -1,4 +1,5 @@
 import { RESTDataSource } from 'apollo-datasource-rest';
+import DataLoader from 'dataloader';
 
 const buildPaginationContext = (cursor, limit) =>
   JSON.stringify({
@@ -18,6 +19,14 @@ export class API extends RESTDataSource {
   willSendRequest(request) {
     request.headers.set('Authorization', this.context.token);
   }
+
+  ouiDataloader = new DataLoader(async (keys) => {
+    const results = await this.get('portal/manufacturer/oui/list', {
+      ouiList: keys,
+    });
+
+    return keys.map((key) => results[key]);
+  });
 
   async createToken(userId, password) {
     return this.post('management/v1/oauth2/token', {
@@ -226,5 +235,15 @@ export class API extends RESTDataSource {
       dataTypes,
       paginationContext: buildPaginationContext(cursor, limit),
     });
+  }
+
+  async getOuiLookup(oui) {
+    const result = await this.ouiDataloader.load(oui);
+
+    return result && (result.manufacturerAlias || result.manufacturerName);
+  }
+
+  async getAllOui() {
+    return this.get('portal/manufacturer/oui/all');
   }
 }

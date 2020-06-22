@@ -93,6 +93,10 @@ const resolvers = {
         limit
       );
     },
+
+    getAllOui: async (_, {}, { dataSources }) => {
+      return dataSources.api.getAllOui();
+    },
   },
   Mutation: {
     authenticateUser: async (_, { email, password }, { dataSources }) => {
@@ -282,6 +286,11 @@ const resolvers = {
       Object.keys(avgNoiseFloor).forEach((i) => values.push(avgNoiseFloor[i]));
       return values;
     },
+    manufacturer: ({ reportedMacAddr }, args, { dataSources }) => {
+      return dataSources.api.getOuiLookup(
+        reportedMacAddr.addressAsString.replace(/:/g, '').substring(0, 6)
+      );
+    },
   },
   Profile: {
     childProfiles: ({ childProfileIds }, args, { dataSources }) => {
@@ -296,6 +305,11 @@ const resolvers = {
     ssid: ({ details }) => details.ssid,
     radioType: ({ details }) => details.radioType,
     signal: ({ details }) => details.metricDetails.rssi,
+    manufacturer: ({ macAddress }, args, { dataSources }) => {
+      return dataSources.api.getOuiLookup(
+        macAddress.addressAsString.replace(/:/g, '').substring(0, 6)
+      );
+    },
     equipment: ({ equipmentId }, args, { dataSources }) => {
       return dataSources.api.getEquipment(equipmentId);
     },

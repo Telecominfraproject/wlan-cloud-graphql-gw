@@ -292,8 +292,12 @@ const resolvers = {
       return values;
     },
     manufacturer: ({ reportedMacAddr }, args, { dataSources }) => {
-      return dataSources.api.getOuiLookup(
-        reportedMacAddr.addressAsString.replace(/:/g, '').substring(0, 6)
+      return (
+        reportedMacAddr &&
+        reportedMacAddr.addressAsString &&
+        dataSources.api.getOuiLookup(
+          reportedMacAddr.addressAsString.replace(/:/g, '').substring(0, 6)
+        )
       );
     },
   },
@@ -309,10 +313,12 @@ const resolvers = {
     hostname: ({ details }) => details.hostname,
     ssid: ({ details }) => details.ssid,
     radioType: ({ details }) => details.radioType,
-    signal: ({ details }) => details.metricDetails.rssi,
+    signal: ({ details }) => details.metricDetails && details.metricDetails.rssi,
     manufacturer: ({ macAddress }, args, { dataSources }) => {
-      return dataSources.api.getOuiLookup(
-        macAddress.addressAsString.replace(/:/g, '').substring(0, 6)
+      return (
+        reportedMacAddr &&
+        reportedMacAddr.addressAsString &&
+        dataSources.api.getOuiLookup(macAddress.addressAsString.replace(/:/g, '').substring(0, 6))
       );
     },
     equipment: ({ equipmentId }, args, { dataSources }) => {

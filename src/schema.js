@@ -59,6 +59,8 @@ const typeDefs = gql`
     ): ServiceMetricPagination
 
     getAllOui: [JSONObject]
+
+    getAllFirmware: [Firmware]
   }
 
   type PaginationContext {
@@ -141,6 +143,7 @@ const typeDefs = gql`
     radioUtilization: Status
     osPerformance: Status
     clientDetails: Status
+    firmware: Status
   }
 
   type Status {
@@ -228,6 +231,17 @@ const typeDefs = gql`
   type AlarmPagination {
     items: [Alarm]
     context: PaginationContext
+  }
+
+  type Firmware {
+    id: ID!
+    equipmentId: ID!
+    modelId: String
+    versionName: String
+    description: String
+    filename: String
+    commit: String
+    releaseDate: String
   }
 
   type GenericResponse {

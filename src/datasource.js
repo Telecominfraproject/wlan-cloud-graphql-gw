@@ -132,6 +132,9 @@ export class API extends RESTDataSource {
     });
   }
   async filterEquipment(customerId, locationIds, equipmentType, cursor, limit) {
+    if (locationIds && locationIds.length === 0) {
+      return null;
+    }
     return this.get('portal/equipment/forCustomerWithFilter', {
       customerId,
       locationIds,
@@ -245,5 +248,11 @@ export class API extends RESTDataSource {
 
   async getAllOui() {
     return this.get('portal/manufacturer/oui/all');
+  }
+
+  async getAllFirmware() {
+    return this.get('portal/firmware/version/byEquipmentType', {
+      equipmentType: 'AP',
+    });
   }
 }

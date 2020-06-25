@@ -97,6 +97,10 @@ const resolvers = {
     getAllOui: async (_, {}, { dataSources }) => {
       return dataSources.api.getAllOui();
     },
+
+    getAllFirmware: async (_, {}, { dataSources }) => {
+      return dataSources.api.getAllFirmware();
+    },
   },
   Mutation: {
     authenticateUser: async (_, { email, password }, { dataSources }) => {
@@ -249,7 +253,7 @@ const resolvers = {
       return dataSources.api.getEquipmentStatus(
         customerId,
         [id],
-        ['PROTOCOL', 'OS_PERFORMANCE', 'RADIO_UTILIZATION', 'CLIENT_DETAILS']
+        ['PROTOCOL', 'OS_PERFORMANCE', 'RADIO_UTILIZATION', 'CLIENT_DETAILS', 'FIRMWARE']
       );
     },
     channel: ({ details }) => {
@@ -270,6 +274,7 @@ const resolvers = {
     osPerformance: ({ items }) => items.find((i) => i.statusDataType === 'OS_PERFORMANCE'),
     radioUtilization: ({ items }) => items.find((i) => i.statusDataType === 'RADIO_UTILIZATION'),
     clientDetails: ({ items }) => items.find((i) => i.statusDataType === 'CLIENT_DETAILS'),
+    firmware: ({ items }) => items.find((i) => i.statusDataType === 'FIRMWARE'),
   },
   Status: {
     detailsJSON: ({ details }) => details,

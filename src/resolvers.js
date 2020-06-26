@@ -316,8 +316,8 @@ const resolvers = {
     signal: ({ details }) => details.metricDetails && details.metricDetails.rssi,
     manufacturer: ({ macAddress }, args, { dataSources }) => {
       return (
-        reportedMacAddr &&
-        reportedMacAddr.addressAsString &&
+        macAddress &&
+        macAddress.addressAsString &&
         dataSources.api.getOuiLookup(macAddress.addressAsString.replace(/:/g, '').substring(0, 6))
       );
     },

@@ -231,7 +231,16 @@ const resolvers = {
     },
     updateProfile: async (
       _,
-      { id, profileType, customerId, name, childProfileIds, lastModifiedTimestamp, details },
+      {
+        id,
+        profileType,
+        customerId,
+        name,
+        childProfileIds,
+        createdTimestamp,
+        lastModifiedTimestamp,
+        details,
+      },
       { dataSources }
     ) => {
       return dataSources.api.updateProfile({

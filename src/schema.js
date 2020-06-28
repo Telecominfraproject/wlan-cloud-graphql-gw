@@ -169,6 +169,7 @@ const typeDefs = gql`
     profileType: String!
     customerId: Int!
     name: String!
+    childProfileIds: [Int]
     childProfiles: [Profile]
     createdTimestamp: String
     lastModifiedTimestamp: String

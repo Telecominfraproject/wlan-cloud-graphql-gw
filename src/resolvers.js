@@ -70,8 +70,8 @@ const resolvers = {
     deleteProfile: async (_, { id }, { dataSources }) => {
       return dataSources.api.deleteProfile(id);
     },
-    getAllProfiles: async (_, { customerId, cursor, limit }, { dataSources }) => {
-      return dataSources.api.getAllProfiles(customerId, cursor, limit);
+    getAllProfiles: async (_, { customerId, cursor, limit, type }, { dataSources }) => {
+      return dataSources.api.getAllProfiles({ customerId, cursor, limit, type });
     },
 
     getAllAlarms: async (_, { customerId, cursor, limit }, { dataSources }) => {

@@ -191,11 +191,18 @@ export class API extends RESTDataSource {
       profileId,
     });
   }
-  async getAllProfiles(customerId, cursor, limit) {
-    return this.get('portal/profile/forCustomer', {
+  async getAllProfiles({ customerId, cursor, limit, type }) {
+    const result = await this.get('portal/profile/forCustomer', {
       customerId,
       paginationContext: buildPaginationContext(cursor, limit),
     });
+
+    if (type && result.items) {
+      result.items = result.items.filter((i) => i.profileType === type);
+      return result;
+    }
+
+    return result;
   }
   async getProfilesById(profileIdSet) {
     return this.get('portal/profile/inSet', {

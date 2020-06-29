@@ -297,12 +297,16 @@ const resolvers = {
     reportedMacAddr: ({ reportedMacAddr }) => reportedMacAddr && reportedMacAddr.addressAsString,
     capacityDetails: ({ capacityDetails }) => {
       const values = [];
-      Object.keys(capacityDetails).forEach((i) => values.push(capacityDetails[i].usedCapacity));
+      if (capacityDetails) {
+        Object.keys(capacityDetails).forEach((i) => values.push(capacityDetails[i].usedCapacity));
+      }
       return values;
     },
     noiseFloorDetails: ({ avgNoiseFloor }) => {
       const values = [];
-      Object.keys(avgNoiseFloor).forEach((i) => values.push(avgNoiseFloor[i]));
+      if (avgNoiseFloor) {
+        Object.keys(avgNoiseFloor).forEach((i) => values.push(avgNoiseFloor[i]));
+      }
       return values;
     },
     manufacturer: ({ reportedMacAddr }, args, { dataSources }) => {
@@ -313,6 +317,13 @@ const resolvers = {
           reportedMacAddr.addressAsString.replace(/:/g, '').substring(0, 6)
         )
       );
+    },
+    numClientsPerRadio: ({ numClientsPerRadio }) => {
+      const values = [];
+      if (numClientsPerRadio) {
+        Object.keys(numClientsPerRadio).forEach((i) => values.push(numClientsPerRadio[i]));
+      }
+      return values;
     },
   },
   Profile: {

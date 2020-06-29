@@ -236,12 +236,22 @@ export class API extends RESTDataSource {
     return totalCount;
   }
 
-  async filterServiceMetrics(customerId, fromTime, toTime, clientMacs, dataTypes, cursor, limit) {
+  async filterServiceMetrics(
+    customerId,
+    fromTime,
+    toTime,
+    equipmentIds,
+    clientMacs,
+    dataTypes,
+    cursor,
+    limit
+  ) {
     return this.get('portal/serviceMetric/forCustomer', {
       customerId,
       fromTime,
       toTime,
-      clientMacs,
+      equipmentIds: equipmentIds || [],
+      clientMacs: clientMacs || [],
       dataTypes,
       paginationContext: buildPaginationContext(cursor, limit),
     });

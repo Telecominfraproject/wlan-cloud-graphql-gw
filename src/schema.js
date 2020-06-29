@@ -60,6 +60,7 @@ const typeDefs = gql`
       fromTime: Int!
       toTime: Int!
       clientMacs: [String]
+      equipmentIds: [ID]
       dataTypes: [String]
       cursor: String
       limit: Int
@@ -249,7 +250,6 @@ const typeDefs = gql`
 
   type Firmware {
     id: ID!
-    equipmentId: ID!
     modelId: String
     versionName: String
     description: String

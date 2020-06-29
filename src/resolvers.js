@@ -80,13 +80,14 @@ const resolvers = {
 
     filterServiceMetrics: async (
       _,
-      { customerId, fromTime, toTime, clientMacs, dataTypes, cursor, limit },
+      { customerId, fromTime, toTime, clientMacs, equipmentIds, dataTypes, cursor, limit },
       { dataSources }
     ) => {
       return dataSources.api.filterServiceMetrics(
         customerId,
         fromTime,
         toTime,
+        equipmentIds,
         clientMacs,
         dataTypes,
         cursor,

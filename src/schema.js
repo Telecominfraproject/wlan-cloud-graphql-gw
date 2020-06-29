@@ -32,6 +32,13 @@ const typeDefs = gql`
       customerId: Int!
       equipmentIds: [Int]
       statusDataTypes: [String]
+    ): EquipmentStatus
+
+    getAllStatus(
+      customerId: Int!
+      statusDataTypes: [String]
+      cursor: String
+      limit: Int
     ): StatusPagination
 
     getProfile(id: Int!): Profile
@@ -124,7 +131,7 @@ const typeDefs = gql`
     profile: Profile
     alarmsCount: Int
     alarms: [Alarm]
-    status: StatusPagination
+    status: EquipmentStatus
     details: JSONObject
   }
 
@@ -138,12 +145,13 @@ const typeDefs = gql`
     perRadioDetails: JSONObject
   }
 
-  type StatusPagination {
+  type EquipmentStatus {
     protocol: Status
     radioUtilization: Status
     osPerformance: Status
     clientDetails: Status
     firmware: Status
+    dashboard: Status
   }
 
   type Status {
@@ -162,6 +170,11 @@ const typeDefs = gql`
     noiseFloorDetails: [Int]
     numClientsPerRadio: [Int]
     manufacturer: String
+  }
+
+  type StatusPagination {
+    items: [Status]
+    context: PaginationContext
   }
 
   type Profile {

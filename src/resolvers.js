@@ -101,6 +101,10 @@ const resolvers = {
     getAllFirmware: async (_, {}, { dataSources }) => {
       return dataSources.api.getAllFirmware();
     },
+
+    getAllStatus: async (_, { customerId, statusDataTypes, cursor, limit }, { dataSources }) => {
+      return dataSources.api.getAllStatus(customerId, statusDataTypes, cursor, limit);
+    },
   },
   Mutation: {
     authenticateUser: async (_, { email, password }, { dataSources }) => {
@@ -278,12 +282,13 @@ const resolvers = {
       return dataSources.api.getAllAlarmsForEquipment(customerId, [id]);
     },
   },
-  StatusPagination: {
+  EquipmentStatus: {
     protocol: ({ items }) => items.find((i) => i.statusDataType === 'PROTOCOL'),
     osPerformance: ({ items }) => items.find((i) => i.statusDataType === 'OS_PERFORMANCE'),
     radioUtilization: ({ items }) => items.find((i) => i.statusDataType === 'RADIO_UTILIZATION'),
     clientDetails: ({ items }) => items.find((i) => i.statusDataType === 'CLIENT_DETAILS'),
     firmware: ({ items }) => items.find((i) => i.statusDataType === 'FIRMWARE'),
+    dashboard: ({ items }) => items.find((i) => i.statusDataType === 'CUSTOMER_DASHBOARD'),
   },
   Status: {
     detailsJSON: ({ details }) => details,

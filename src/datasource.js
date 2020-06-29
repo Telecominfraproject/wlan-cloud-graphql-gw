@@ -262,4 +262,12 @@ export class API extends RESTDataSource {
       equipmentType: 'AP',
     });
   }
+
+  async getAllStatus(customerId, statusDataTypes, cursor, limit) {
+    return this.get('portal/status/forCustomerWithFilter', {
+      customerId,
+      statusDataTypes,
+      paginationContext: buildPaginationContext(cursor, limit),
+    });
+  }
 }

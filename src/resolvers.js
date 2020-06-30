@@ -331,12 +331,11 @@ const resolvers = {
 
       if (equipmentCountPerOui) {
         for (const i in equipmentCountPerOui) {
-          const oui = await dataSources.api.getOuiLookup(i);
-          if (oui) {
-            result[oui] = equipmentCountPerOui[i];
-          } else {
-            result[i] = equipmentCountPerOui[i];
+          const oui = (await dataSources.api.getOuiLookup(i)) || i;
+          if (!(oui in result)) {
+            result[oui] = 0;
           }
+          result[oui] += equipmentCountPerOui[i];
         }
       }
 
@@ -347,12 +346,11 @@ const resolvers = {
 
       if (clientCountPerOui) {
         for (const i in clientCountPerOui) {
-          const oui = await dataSources.api.getOuiLookup(i);
-          if (oui) {
-            result[oui] = clientCountPerOui[i];
-          } else {
-            result[i] = clientCountPerOui[i];
+          const oui = (await dataSources.api.getOuiLookup(i)) || i;
+          if (!(oui in result)) {
+            result[oui] = 0;
           }
+          result[oui] += clientCountPerOui[i];
         }
       }
 

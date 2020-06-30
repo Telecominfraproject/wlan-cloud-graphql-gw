@@ -326,6 +326,38 @@ const resolvers = {
       }
       return values;
     },
+    equipmentCountPerOui: async ({ equipmentCountPerOui }, args, { dataSources }) => {
+      const result = {};
+
+      if (equipmentCountPerOui) {
+        for (const i in equipmentCountPerOui) {
+          const oui = await dataSources.api.getOuiLookup(i);
+          if (oui) {
+            result[oui] = equipmentCountPerOui[i];
+          } else {
+            result[i] = equipmentCountPerOui[i];
+          }
+        }
+      }
+
+      return result;
+    },
+    clientCountPerOui: async ({ clientCountPerOui }, args, { dataSources }) => {
+      const result = {};
+
+      if (clientCountPerOui) {
+        for (const i in clientCountPerOui) {
+          const oui = await dataSources.api.getOuiLookup(i);
+          if (oui) {
+            result[oui] = clientCountPerOui[i];
+          } else {
+            result[i] = clientCountPerOui[i];
+          }
+        }
+      }
+
+      return result;
+    },
   },
   Profile: {
     childProfiles: ({ childProfileIds }, args, { dataSources }) => {

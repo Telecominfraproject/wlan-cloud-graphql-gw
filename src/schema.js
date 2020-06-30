@@ -171,6 +171,8 @@ const typeDefs = gql`
     noiseFloorDetails: [Int]
     numClientsPerRadio: [Int]
     manufacturer: String
+    equipmentCountPerOui: JSONObject
+    clientCountPerOui: JSONObject
   }
 
   type StatusPagination {

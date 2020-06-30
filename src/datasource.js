@@ -258,7 +258,7 @@ export class API extends RESTDataSource {
   }
 
   async getOuiLookup(oui) {
-    const result = await this.ouiDataloader.load(oui);
+    const result = await this.ouiDataloader.load(oui.toLowerCase());
 
     return result && (result.manufacturerAlias || result.manufacturerName);
   }

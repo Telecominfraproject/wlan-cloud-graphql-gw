@@ -7,9 +7,6 @@ const resolvers = {
     getUser: async (_, { id }, { dataSources }) => {
       return dataSources.api.getUser(id);
     },
-    deleteUser: async (_, { id }, { dataSources }) => {
-      return dataSources.api.deleteUser(id);
-    },
     getAllUsers: async (_, { customerId, cursor, limit }, { dataSources }) => {
       return dataSources.api.getAllUsers(customerId, cursor, limit);
     },
@@ -30,9 +27,6 @@ const resolvers = {
 
     getEquipment: async (_, { id }, { dataSources }) => {
       return dataSources.api.getEquipment(id);
-    },
-    deleteEquipment: async (_, { id }, { dataSources }) => {
-      return dataSources.api.deleteEquipment(id);
     },
     getAllEquipment: async (_, { customerId, cursor, limit }, { dataSources }) => {
       return dataSources.api.getAllEquipment(customerId, cursor, limit);
@@ -66,9 +60,6 @@ const resolvers = {
 
     getProfile: async (_, { id }, { dataSources }) => {
       return dataSources.api.getProfile(id);
-    },
-    deleteProfile: async (_, { id }, { dataSources }) => {
-      return dataSources.api.deleteProfile(id);
     },
     getAllProfiles: async (_, { customerId, cursor, limit, type }, { dataSources }) => {
       return dataSources.api.getAllProfiles({ customerId, cursor, limit, type });
@@ -134,6 +125,9 @@ const resolvers = {
         customerId,
         lastModifiedTimestamp,
       });
+    },
+    deleteUser: async (_, { id }, { dataSources }) => {
+      return dataSources.api.deleteUser(id);
     },
 
     createLocation: async (_, { locationType, customerId, parentId, name }, { dataSources }) => {
@@ -223,6 +217,9 @@ const resolvers = {
     updateEquipmentBulk: async (_, { items }, { dataSources }) => {
       return dataSources.api.updateEquipmentBulk(items);
     },
+    deleteEquipment: async (_, { id }, { dataSources }) => {
+      return dataSources.api.deleteEquipment(id);
+    },
 
     createProfile: async (
       _,
@@ -260,6 +257,9 @@ const resolvers = {
         lastModifiedTimestamp,
         details,
       });
+    },
+    deleteProfile: async (_, { id }, { dataSources }) => {
+      return dataSources.api.deleteProfile(id);
     },
 
     fileUpload: async (_, { fileName, file }, { dataSources }) => {

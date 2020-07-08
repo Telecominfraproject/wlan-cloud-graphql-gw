@@ -8,7 +8,6 @@ const typeDefs = gql`
 
   type Query {
     getUser(id: Int!): User
-    deleteUser(id: Int!): User
     getAllUsers(customerId: Int!, cursor: String, limit: Int): UserPagination
 
     getCustomer(id: Int!): Customer
@@ -18,7 +17,6 @@ const typeDefs = gql`
     getAllLocations(customerId: Int!): [Location]
 
     getEquipment(id: Int!): Equipment
-    deleteEquipment(id: Int!): Equipment
     getAllEquipment(customerId: Int!, cursor: String, limit: Int): EquipmentPagination
     filterEquipment(
       customerId: Int!
@@ -42,7 +40,6 @@ const typeDefs = gql`
     ): StatusPagination
 
     getProfile(id: Int!): Profile
-    deleteProfile(id: Int!): Profile
     getAllProfiles(customerId: Int!, cursor: String, limit: Int, type: String): ProfilePagination
 
     getClientSession(customerId: Int!, macAddress: String!): [ClientSession]
@@ -285,6 +282,7 @@ const typeDefs = gql`
       customerId: Int!
       lastModifiedTimestamp: String
     ): User
+    deleteUser(id: Int!): User
 
     createLocation(locationType: String!, customerId: Int!, parentId: Int!, name: String!): Location
     updateLocation(
@@ -325,6 +323,7 @@ const typeDefs = gql`
       details: JSONObject
     ): Equipment
     updateEquipmentBulk(items: [EquipmentRrmUpdate]): GenericResponse
+    deleteEquipment(id: Int!): Equipment
 
     createProfile(
       profileType: String!
@@ -343,6 +342,7 @@ const typeDefs = gql`
       lastModifiedTimestamp: String
       details: JSONObject
     ): Profile
+    deleteProfile(id: Int!): Profile
 
     updateOui(
       manufacturerAlias: String

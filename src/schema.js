@@ -66,6 +66,7 @@ const typeDefs = gql`
       limit: Int
     ): ServiceMetricPagination
 
+    getOui(oui: String!): ManufacturerOuiDetails
     getAllOui: [JSONObject]
 
     getAllFirmware: [Firmware]
@@ -260,6 +261,12 @@ const typeDefs = gql`
     releaseDate: String
   }
 
+  type ManufacturerOuiDetails {
+    manufacturerAlias: String
+    manufacturerName: String
+    oui: String
+  }
+
   type GenericResponse {
     message: String
     success: Boolean
@@ -336,6 +343,14 @@ const typeDefs = gql`
       lastModifiedTimestamp: String
       details: JSONObject
     ): Profile
+
+    updateOui(
+      manufacturerAlias: String
+      manufacturerName: String
+      oui: String
+    ): ManufacturerOuiDetails
+
+    fileUpload(fileName: String, file: Upload): GenericResponse
   }
 `;
 

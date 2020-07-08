@@ -263,6 +263,16 @@ export class API extends RESTDataSource {
     return result && (result.manufacturerAlias || result.manufacturerName);
   }
 
+  async getOui(oui) {
+    return this.get('portal/manufacturer/oui', {
+      oui,
+    });
+  }
+  async updateOui(oui) {
+    return this.put('portal/manufacturer/oui/alias', {
+      ...oui,
+    });
+  }
   async getAllOui() {
     return this.get('portal/manufacturer/oui/all');
   }
@@ -279,5 +289,9 @@ export class API extends RESTDataSource {
       statusDataTypes,
       paginationContext: buildPaginationContext(cursor, limit),
     });
+  }
+
+  async fileUpload(fileName, file) {
+    return this.post(`filestore/${fileName}`, file);
   }
 }

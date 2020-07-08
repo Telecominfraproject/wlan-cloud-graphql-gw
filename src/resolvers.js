@@ -95,6 +95,9 @@ const resolvers = {
       );
     },
 
+    getOui: async (_, { oui }, { dataSources }) => {
+      return dataSources.api.getOui(oui);
+    },
     getAllOui: async (_, {}, { dataSources }) => {
       return dataSources.api.getAllOui();
     },
@@ -257,6 +260,14 @@ const resolvers = {
         lastModifiedTimestamp,
         details,
       });
+    },
+
+    fileUpload: async (_, { fileName, file }, { dataSources }) => {
+      return dataSources.api.fileUpload(fileName, file);
+    },
+
+    updateOui: async (_, { manufacturerAlias, manufacturerName, oui }, { dataSources }) => {
+      return dataSources.api.updateOui({ manufacturerAlias, manufacturerName, oui });
     },
   },
   Equipment: {

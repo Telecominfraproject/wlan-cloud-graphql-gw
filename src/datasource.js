@@ -1,6 +1,8 @@
 import { RESTDataSource } from 'apollo-datasource-rest';
 import DataLoader from 'dataloader';
 
+const fs = require('fs').promises;
+
 const buildPaginationContext = (cursor, limit) =>
   JSON.stringify({
     model_type: 'PaginationContext',
@@ -292,6 +294,12 @@ export class API extends RESTDataSource {
   }
 
   async fileUpload(fileName, file) {
-    return this.post(`filestore/${fileName}`, file);
+    const result = await this.post(`filestore/${fileName}`, file, {
+      headers: {
+        'Content-Type': 'application/octet-stream',
+      },
+    });
+
+    return result && result.success && { fileName };
   }
 }

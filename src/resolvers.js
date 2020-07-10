@@ -405,6 +405,11 @@ const resolvers = {
     cpuUtilized: ({ details }) => details.apPerformance.cpuUtilized,
     cpuTemperature: ({ details }) => details.apPerformance.cpuTemperature,
   },
+  File: {
+    baseUrl: ({}, args, { dataSources }) => {
+      return dataSources.api.baseURL;
+    },
+  },
 };
 
 module.exports = resolvers;

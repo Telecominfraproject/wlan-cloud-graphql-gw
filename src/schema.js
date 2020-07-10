@@ -264,6 +264,11 @@ const typeDefs = gql`
     oui: String
   }
 
+  type File {
+    fileName: String
+    baseUrl: String
+  }
+
   type GenericResponse {
     message: String
     success: Boolean
@@ -350,7 +355,7 @@ const typeDefs = gql`
       oui: String
     ): ManufacturerOuiDetails
 
-    fileUpload(fileName: String, file: Upload): GenericResponse
+    fileUpload(fileName: String, file: Upload): File
   }
 `;
 

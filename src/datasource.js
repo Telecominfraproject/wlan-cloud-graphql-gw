@@ -302,4 +302,14 @@ export class API extends RESTDataSource {
 
     return result && result.success && { fileName };
   }
+
+  async ouiUpload(fileName, file) {
+    const result = await this.post(`portal/manufacturer/oui/upload?fileName=${fileName}`, file, {
+      headers: {
+        'Content-Type': 'application/octet-stream',
+      },
+    });
+
+    return result && result.success && { fileName };
+  }
 }

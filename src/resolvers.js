@@ -266,6 +266,10 @@ const resolvers = {
       return dataSources.api.fileUpload(fileName, file);
     },
 
+    ouiUpload: async (_, { fileName, file }, { dataSources }) => {
+      return dataSources.api.ouiUpload(fileName, file);
+    },
+
     updateOui: async (_, { manufacturerAlias, manufacturerName, oui }, { dataSources }) => {
       return dataSources.api.updateOui({ manufacturerAlias, manufacturerName, oui });
     },

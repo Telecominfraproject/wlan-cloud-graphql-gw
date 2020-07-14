@@ -293,8 +293,15 @@ const resolvers = {
       return values;
     },
     model: ({ details }) => details.equipmentModel,
-    alarmsCount: ({ customerId, id }, args, { dataSources }) => {
-      return dataSources.api.getAlarmCount(customerId, [id]);
+    alarmsCount: async ({ customerId, id }, args, { dataSources }) => {
+      const result = await dataSources.api.getAlarmCount(customerId, [id]);
+
+      let totalCount = 0;
+      Object.keys(result.totalCountsPerAlarmCodeMap).forEach(
+        (i) => (totalCount += result.totalCountsPerAlarmCodeMap[i])
+      );
+
+      return totalCount;
     },
     alarms: ({ customerId, id }, args, { dataSources }) => {
       return dataSources.api.getAllAlarmsForEquipment(customerId, [id]);
@@ -310,6 +317,9 @@ const resolvers = {
   },
   Status: {
     detailsJSON: ({ details }) => details,
+    alarmsCount: ({ customerId }, args, { dataSources }) => {
+      return dataSources.api.getAlarmCount(customerId);
+    },
   },
   StatusDetails: {
     reportedMacAddr: ({ reportedMacAddr }) => reportedMacAddr && reportedMacAddr.addressAsString,

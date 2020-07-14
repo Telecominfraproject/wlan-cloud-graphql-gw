@@ -159,6 +159,7 @@ const typeDefs = gql`
     lastModifiedTimestamp: String
     details: StatusDetails
     detailsJSON: JSONObject
+    alarmsCount: JSONObject
   }
 
   type StatusDetails {

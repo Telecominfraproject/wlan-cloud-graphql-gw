@@ -229,18 +229,12 @@ export class API extends RESTDataSource {
       equipmentIds,
     });
   }
-  async getAlarmCount(customerId, equipmentIds) {
-    const alarmCount = await this.get('portal/alarm/counts', {
+  async getAlarmCount(customerId, equipmentIds = [], alarmCodes = []) {
+    return this.get('portal/alarm/counts', {
       customerId,
       equipmentIds,
+      alarmCodes,
     });
-
-    let totalCount = 0;
-    Object.keys(alarmCount.totalCountsPerAlarmCodeMap).forEach(
-      (i) => (totalCount += alarmCount.totalCountsPerAlarmCodeMap[i])
-    );
-
-    return totalCount;
   }
 
   async filterServiceMetrics(

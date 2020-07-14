@@ -154,31 +154,15 @@ const resolvers = {
 
     createEquipment: async (
       _,
-      {
-        equipmentType,
-        inventoryId,
-        customerId,
-        profileId,
-        locationId,
-        name,
-        latitude,
-        longitude,
-        serial,
-        details,
-      },
+      { inventoryId, customerId, profileId, locationId, name },
       { dataSources }
     ) => {
       return dataSources.api.createEquipment({
-        equipmentType,
         inventoryId,
         customerId,
         profileId,
         locationId,
         name,
-        latitude,
-        longitude,
-        serial,
-        details,
       });
     },
     updateEquipment: async (

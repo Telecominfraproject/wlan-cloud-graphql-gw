@@ -110,6 +110,7 @@ export class API extends RESTDataSource {
   async createEquipment(equipment) {
     return this.post('portal/equipment', {
       ...equipment,
+      equipmentType: 'AP',
     });
   }
   async getEquipment(equipmentId) {

@@ -303,16 +303,11 @@ const typeDefs = gql`
     deleteLocation(id: Int!): Location
 
     createEquipment(
-      equipmentType: String!
       inventoryId: String!
       customerId: Int!
       profileId: Int!
       locationId: Int!
       name: String!
-      latitude: String
-      longitude: String
-      serial: String
-      details: JSONObject
     ): Equipment
     updateEquipment(
       id: Int!

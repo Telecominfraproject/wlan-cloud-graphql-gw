@@ -220,6 +220,9 @@ const resolvers = {
     deleteEquipment: async (_, { id }, { dataSources }) => {
       return dataSources.api.deleteEquipment(id);
     },
+    updateEquipmentFirmware: async (_, { equipmentId, firmwareVersionId }, { dataSources }) => {
+      return dataSources.api.updateEquipmentFirmware(equipmentId, firmwareVersionId);
+    },
 
     createProfile: async (
       _,
@@ -269,7 +272,6 @@ const resolvers = {
     ouiUpload: async (_, { fileName, file }, { dataSources }) => {
       return dataSources.api.ouiUpload(fileName, file);
     },
-
     updateOui: async (_, { manufacturerAlias, manufacturerName, oui }, { dataSources }) => {
       return dataSources.api.updateOui({ manufacturerAlias, manufacturerName, oui });
     },

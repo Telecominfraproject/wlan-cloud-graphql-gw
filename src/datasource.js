@@ -149,6 +149,12 @@ export class API extends RESTDataSource {
       items,
     });
   }
+  async updateEquipmentFirmware(equipmentId, firmwareVersionId) {
+    return this.post('portal/equipmentGateway/requestFirmwareUpdate', {
+      equipmentId,
+      firmwareVersionId,
+    });
+  }
 
   async getEquipmentStatus(customerId, equipmentIds, statusDataTypes) {
     return this.get('portal/status/forCustomerWithFilter', {

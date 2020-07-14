@@ -329,7 +329,7 @@ const typeDefs = gql`
     ): Equipment
     updateEquipmentBulk(items: [EquipmentRrmUpdate]): GenericResponse
     deleteEquipment(id: Int!): Equipment
-    updateEquipmentFirmware(equipmentId: Int, firmwareVersionId: Int): GenericResponse
+    updateEquipmentFirmware(equipmentId: ID, firmwareVersionId: ID): GenericResponse
 
     createProfile(
       profileType: String!

@@ -273,17 +273,23 @@ const resolvers = {
     },
     channel: ({ details }) => {
       const values = [];
-      Object.keys(details.radioMap).forEach((i) => values.push(details.radioMap[i].channelNumber));
+      if (details && details.radioMap) {
+        Object.keys(details.radioMap).forEach((i) =>
+          values.push(details.radioMap[i].channelNumber)
+        );
+      }
       return values;
     },
-    model: ({ details }) => details.equipmentModel,
+    model: ({ details }) => details && details.equipmentModel,
     alarmsCount: async ({ customerId, id }, args, { dataSources }) => {
       const result = await dataSources.api.getAlarmCount(customerId, [id]);
 
       let totalCount = 0;
-      Object.keys(result.totalCountsPerAlarmCodeMap).forEach(
-        (i) => (totalCount += result.totalCountsPerAlarmCodeMap[i])
-      );
+      if (result && result.totalCountsPerAlarmCodeMap) {
+        Object.keys(result.totalCountsPerAlarmCodeMap).forEach(
+          (i) => (totalCount += result.totalCountsPerAlarmCodeMap[i])
+        );
+      }
 
       return totalCount;
     },

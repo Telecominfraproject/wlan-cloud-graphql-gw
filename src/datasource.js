@@ -302,6 +302,11 @@ export class API extends RESTDataSource {
     });
   }
 
+  async getAllFirmwareTrackAssignment() {
+    return this.get('portal/firmware/trackAssignment', {
+      firmwareTrackName: 'DEFAULT',
+    });
+  }
   async updateFirmwareTrackAssignment(firmware) {
     return this.put('portal/firmware/trackAssignment', {
       ...firmware,

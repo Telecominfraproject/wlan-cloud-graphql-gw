@@ -96,6 +96,9 @@ const resolvers = {
     getAllFirmware: async (_, {}, { dataSources }) => {
       return dataSources.api.getAllFirmware();
     },
+    getAllFirmwareTrackAssignment: async (_, {  }, { dataSources }) => {
+      return dataSources.api.getAllFirmwareTrackAssignment();
+    },
     getFirmwareTrack: async (_, { firmwareTrackName }, { dataSources }) => {
       return dataSources.api.getFirmwareTrack(firmwareTrackName);
     },

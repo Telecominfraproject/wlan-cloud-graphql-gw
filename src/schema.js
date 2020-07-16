@@ -67,6 +67,7 @@ const typeDefs = gql`
     getAllOui: [JSONObject]
 
     getAllFirmware: [Firmware]
+    getAllFirmwareTrackAssignment: [FirmwareTrackAssignment]
     getFirmwareTrack(firmwareTrackName: String!): [FirmwareTrack]
   }
 
@@ -395,7 +396,7 @@ const typeDefs = gql`
       createdTimestamp: String
       lastModifiedTimestamp: String
     ): Firmware
-    deleteFirmware(id: Id!): Firmware
+    deleteFirmware(id: ID!): Firmware
 
     updateFirmwareTrackAssignment(
       trackRecordId: ID!
@@ -405,8 +406,8 @@ const typeDefs = gql`
       lastModifiedTimestamp: String
     ): FirmwareTrackAssignment
     deleteFirmwareTrackAssignment(
-      firmwareTrackId: Id!
-      firmwareVersionId: Id!
+      firmwareTrackId: ID!
+      firmwareVersionId: ID!
     ): FirmwareTrackAssignment
   }
 `;

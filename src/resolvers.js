@@ -296,17 +296,19 @@ const resolvers = {
     alarms: ({ customerId, id }, args, { dataSources }) => {
       return dataSources.api.getAllAlarmsForEquipment(customerId, [id]);
     },
+    details: ({ details }) => details || {},
   },
   EquipmentStatus: {
-    protocol: ({ items }) => items.find((i) => i.statusDataType === 'PROTOCOL'),
-    osPerformance: ({ items }) => items.find((i) => i.statusDataType === 'OS_PERFORMANCE'),
-    radioUtilization: ({ items }) => items.find((i) => i.statusDataType === 'RADIO_UTILIZATION'),
-    clientDetails: ({ items }) => items.find((i) => i.statusDataType === 'CLIENT_DETAILS'),
-    firmware: ({ items }) => items.find((i) => i.statusDataType === 'FIRMWARE'),
+    protocol: ({ items }) => items.find((i) => i.statusDataType === 'PROTOCOL') || {},
+    osPerformance: ({ items }) => items.find((i) => i.statusDataType === 'OS_PERFORMANCE') || {},
+    radioUtilization: ({ items }) =>
+      items.find((i) => i.statusDataType === 'RADIO_UTILIZATION') | {},
+    clientDetails: ({ items }) => items.find((i) => i.statusDataType === 'CLIENT_DETAILS') || {},
+    firmware: ({ items }) => items.find((i) => i.statusDataType === 'FIRMWARE' || {}),
     dashboard: ({ items }) => items.find((i) => i.statusDataType === 'CUSTOMER_DASHBOARD'),
   },
   Status: {
-    detailsJSON: ({ details }) => details,
+    detailsJSON: ({ details }) => details || {},
     alarmsCount: ({ customerId }, args, { dataSources }) => {
       return dataSources.api.getAlarmCount(customerId);
     },

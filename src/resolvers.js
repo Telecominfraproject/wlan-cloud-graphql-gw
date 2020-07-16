@@ -329,7 +329,7 @@ const resolvers = {
       items.find((i) => i.statusDataType === 'RADIO_UTILIZATION') | {},
     clientDetails: ({ items }) => items.find((i) => i.statusDataType === 'CLIENT_DETAILS') || {},
     firmware: ({ items }) => items.find((i) => i.statusDataType === 'FIRMWARE' || {}),
-    dashboard: ({ items }) => items.find((i) => i.statusDataType === 'CUSTOMER_DASHBOARD'),
+    dashboard: ({ items }) => items.find((i) => i.statusDataType === 'CUSTOMER_DASHBOARD') || {},
   },
   Status: {
     detailsJSON: ({ details }) => details || {},

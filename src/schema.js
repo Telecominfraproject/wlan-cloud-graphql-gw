@@ -50,6 +50,7 @@ const typeDefs = gql`
       limit: Int
     ): ClientSessionPagination
 
+    getAlarmCount(customerId: Int!): Int
     getAllAlarms(customerId: Int!, cursor: String, limit: Int): AlarmPagination
 
     filterServiceMetrics(

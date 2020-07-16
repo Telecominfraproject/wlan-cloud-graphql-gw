@@ -68,6 +68,18 @@ const resolvers = {
     getAllAlarms: async (_, { customerId, cursor, limit }, { dataSources }) => {
       return dataSources.api.getAllAlarms(customerId, cursor, limit);
     },
+    getAlarmCount: async (_, { customerId }, { dataSources }) => {
+      const result = await dataSources.api.getAlarmCount(customerId);
+
+      let totalCount = 0;
+      if (result && result.totalCountsPerAlarmCodeMap) {
+        Object.keys(result.totalCountsPerAlarmCodeMap).forEach(
+          (i) => (totalCount += result.totalCountsPerAlarmCodeMap[i])
+        );
+      }
+
+      return totalCount;
+    },
 
     filterServiceMetrics: async (
       _,
@@ -96,7 +108,7 @@ const resolvers = {
     getAllFirmware: async (_, {}, { dataSources }) => {
       return dataSources.api.getAllFirmware();
     },
-    getAllFirmwareTrackAssignment: async (_, {  }, { dataSources }) => {
+    getAllFirmwareTrackAssignment: async (_, {}, { dataSources }) => {
       return dataSources.api.getAllFirmwareTrackAssignment();
     },
     getFirmwareTrack: async (_, { firmwareTrackName }, { dataSources }) => {

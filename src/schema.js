@@ -67,6 +67,7 @@ const typeDefs = gql`
     getAllOui: [JSONObject]
 
     getAllFirmware: [Firmware]
+    getFirmwareTrack(firmwareTrackName: String!): [FirmwareTrack]
   }
 
   type PaginationContext {
@@ -251,12 +252,30 @@ const typeDefs = gql`
 
   type Firmware {
     id: ID!
-    modelId: String
+    modelId: String!
     versionName: String
     description: String
     filename: String
     commit: String
     releaseDate: String
+    validationCode: String
+    createdTimestamp: String
+    lastModifiedTimestamp: String
+  }
+
+  type FirmwareTrackAssignment {
+    trackRecordId: ID!
+    firmwareVersionRecordId: ID!
+    modelId: String!
+    createdTimestamp: String
+    lastModifiedTimestamp: String
+  }
+
+  type FirmwareTrack {
+    recordId: ID!
+    trackName: String
+    createdTimestamp: String
+    lastModifiedTimestamp: String
   }
 
   type ManufacturerOuiDetails {
@@ -354,6 +373,41 @@ const typeDefs = gql`
 
     fileUpload(fileName: String, file: Upload): File
     ouiUpload(fileName: String, file: Upload): File
+
+    createFirmware(
+      modelId: String!
+      versionName: String
+      description: String
+      filename: String
+      commit: String
+      releaseDate: String
+      validationCode: String
+    ): Firmware
+    updateFirmware(
+      id: ID!
+      modelId: String!
+      versionName: String
+      description: String
+      filename: String
+      commit: String
+      releaseDate: String
+      validationCode: String
+      createdTimestamp: String
+      lastModifiedTimestamp: String
+    ): Firmware
+    deleteFirmware(id: Id!): Firmware
+
+    updateFirmwareTrackAssignment(
+      trackRecordId: ID!
+      firmwareVersionRecordId: ID!
+      modelId: String!
+      createdTimestamp: String
+      lastModifiedTimestamp: String
+    ): FirmwareTrackAssignment
+    deleteFirmwareTrackAssignment(
+      firmwareTrackId: Id!
+      firmwareVersionId: Id!
+    ): FirmwareTrackAssignment
   }
 `;
 

@@ -96,6 +96,9 @@ const resolvers = {
     getAllFirmware: async (_, {}, { dataSources }) => {
       return dataSources.api.getAllFirmware();
     },
+    getFirmwareTrack: async (_, { firmwareTrackName }, { dataSources }) => {
+      return dataSources.api.getFirmwareTrack(firmwareTrackName);
+    },
 
     getAllStatus: async (_, { customerId, statusDataTypes, cursor, limit }, { dataSources }) => {
       return dataSources.api.getAllStatus(customerId, statusDataTypes, cursor, limit);
@@ -258,6 +261,27 @@ const resolvers = {
     },
     updateOui: async (_, { manufacturerAlias, manufacturerName, oui }, { dataSources }) => {
       return dataSources.api.updateOui({ manufacturerAlias, manufacturerName, oui });
+    },
+
+    createFirmware: async (_, data, { dataSources }) => {
+      return dataSources.api.createFirmware(data);
+    },
+    updateFirmware: async (_, data, { dataSources }) => {
+      return dataSources.api.updateFirmware(data);
+    },
+    deleteFirmware: async (_, { id }, { dataSources }) => {
+      return dataSources.api.deleteFirmware(id);
+    },
+
+    updateFirmwareTrackAssignment: async (_, data, { dataSources }) => {
+      return dataSources.api.updateFirmwareTrackAssignment(data);
+    },
+    deleteFirmwareTrackAssignment: async (
+      _,
+      { firmwareTrackId, firmwareVersionId },
+      { dataSources }
+    ) => {
+      return dataSources.api.deleteFirmwareTrackAssignment(firmwareTrackId, firmwareVersionId);
     },
   },
   Equipment: {

@@ -279,9 +279,44 @@ export class API extends RESTDataSource {
     return this.get('portal/manufacturer/oui/all');
   }
 
+  async createFirmware(firmware) {
+    return this.post('portal/firmware/version', {
+      ...firmware,
+      equipmentType: 'AP',
+    });
+  }
+  async updateFirmware(firmware) {
+    return this.put('portal/firmware/version', {
+      ...firmware,
+      equipmentType: 'AP',
+    });
+  }
+  async deleteFirmware(id) {
+    return this.delete('portal/firmware/version', {
+      id,
+    });
+  }
   async getAllFirmware() {
     return this.get('portal/firmware/version/byEquipmentType', {
       equipmentType: 'AP',
+    });
+  }
+
+  async updateFirmwareTrackAssignment(firmware) {
+    return this.put('portal/firmware/trackAssignment', {
+      ...firmware,
+    });
+  }
+  async deleteFirmwareTrackAssignment(firmwareTrackId, firmwareVersionId) {
+    return this.delete('portal/firmware/trackAssignment', {
+      firmwareTrackId,
+      firmwareVersionId,
+    });
+  }
+
+  async getFirmwareTrack(firmwareTrackName) {
+    return this.get('portal/firmware/track/byName', {
+      firmwareTrackName,
     });
   }
 

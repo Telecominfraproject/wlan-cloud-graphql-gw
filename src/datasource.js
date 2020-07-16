@@ -293,7 +293,7 @@ export class API extends RESTDataSource {
   }
   async deleteFirmware(id) {
     return this.delete('portal/firmware/version', {
-      id,
+      firmwareVersionId: id,
     });
   }
   async getAllFirmware() {

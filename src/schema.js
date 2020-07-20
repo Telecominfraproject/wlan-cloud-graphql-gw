@@ -79,7 +79,7 @@ const typeDefs = gql`
 
     getAllFirmware: [Firmware]
     getAllFirmwareTrackAssignment: [FirmwareTrackAssignment]
-    getFirmwareTrack(firmwareTrackName: String!): [FirmwareTrack]
+    getFirmwareTrack(firmwareTrackName: String!): FirmwareTrack
   }
 
   type PaginationContext {

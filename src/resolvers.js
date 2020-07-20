@@ -120,8 +120,11 @@ const resolvers = {
       return dataSources.api.getAllOui();
     },
 
-    getAllFirmware: async (_, {}, { dataSources }) => {
-      return dataSources.api.getAllFirmware();
+    getAllFirmware: async (_, { modelId }, { dataSources }) => {
+      return dataSources.api.getAllFirmware(modelId);
+    },
+    getAllFirmwareModelId: async (_, {}, { dataSources }) => {
+      return dataSources.api.getAllFirmwareModelId();
     },
     getAllFirmwareTrackAssignment: async (_, {}, { dataSources }) => {
       return dataSources.api.getAllFirmwareTrackAssignment();

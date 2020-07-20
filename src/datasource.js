@@ -306,8 +306,15 @@ export class API extends RESTDataSource {
       firmwareVersionId: id,
     });
   }
-  async getAllFirmware() {
+  async getAllFirmware(modelId) {
     return this.get('portal/firmware/version/byEquipmentType', {
+      equipmentType: 'AP',
+      modelId: modelId || '',
+    });
+  }
+
+  async getAllFirmwareModelId() {
+    return this.get('portal/firmware/model/byEquipmentType', {
       equipmentType: 'AP',
     });
   }

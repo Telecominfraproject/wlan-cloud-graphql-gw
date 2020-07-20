@@ -77,7 +77,8 @@ const typeDefs = gql`
     getOui(oui: String!): ManufacturerOuiDetails
     getAllOui: [JSONObject]
 
-    getAllFirmware: [Firmware]
+    getAllFirmware(modelId: String): [Firmware]
+    getAllFirmwareModelId: [String]
     getAllFirmwareTrackAssignment: [FirmwareTrackAssignment]
     getFirmwareTrack(firmwareTrackName: String!): FirmwareTrack
   }

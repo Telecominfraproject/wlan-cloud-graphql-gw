@@ -55,14 +55,24 @@ const typeDefs = gql`
 
     filterServiceMetrics(
       customerId: Int!
-      fromTime: Int!
-      toTime: Int!
+      fromTime: String!
+      toTime: String!
       clientMacs: [String]
       equipmentIds: [ID]
       dataTypes: [String]
       cursor: String
       limit: Int
     ): ServiceMetricPagination
+
+    filterSystemEvents(
+      customerId: ID!
+      fromTime: String!
+      toTime: String!
+      equipmentIds: [ID]
+      dataTypes: [String]
+      cursor: String
+      limit: Int
+    ): SystemEventPagination
 
     getOui(oui: String!): ManufacturerOuiDetails
     getAllOui: [JSONObject]
@@ -234,6 +244,11 @@ const typeDefs = gql`
 
   type ServiceMetricPagination {
     items: [ServiceMetric]
+    context: PaginationContext
+  }
+
+  type SystemEventPagination {
+    items: [JSONObject]
     context: PaginationContext
   }
 

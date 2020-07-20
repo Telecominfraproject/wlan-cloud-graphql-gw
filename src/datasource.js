@@ -258,6 +258,16 @@ export class API extends RESTDataSource {
       paginationContext: buildPaginationContext(cursor, limit),
     });
   }
+  async filterSystemEvents(customerId, fromTime, toTime, equipmentIds, dataTypes, cursor, limit) {
+    return this.get('portal/systemEvent/forCustomer', {
+      customerId,
+      fromTime,
+      toTime,
+      equipmentIds: equipmentIds || [],
+      dataTypes: dataTypes || [],
+      paginationContext: buildPaginationContext(cursor, limit),
+    });
+  }
 
   async getOuiLookup(oui) {
     const result = await this.ouiDataloader.load(oui.toLowerCase());

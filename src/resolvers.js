@@ -97,6 +97,21 @@ const resolvers = {
         limit
       );
     },
+    filterSystemEvents: async (
+      _,
+      { customerId, fromTime, toTime, equipmentIds, dataTypes, cursor, limit },
+      { dataSources }
+    ) => {
+      return dataSources.api.filterSystemEvents(
+        customerId,
+        fromTime,
+        toTime,
+        equipmentIds,
+        dataTypes,
+        cursor,
+        limit
+      );
+    },
 
     getOui: async (_, { oui }, { dataSources }) => {
       return dataSources.api.getOui(oui);

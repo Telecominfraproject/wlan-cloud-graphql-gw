@@ -7,54 +7,54 @@ const typeDefs = gql`
   scalar JSONObject
 
   type Query {
-    getUser(id: Int!): User
-    getAllUsers(customerId: Int!, cursor: String, limit: Int): UserPagination
+    getUser(id: ID!): User
+    getAllUsers(customerId: ID!, cursor: String, limit: Int): UserPagination
 
-    getCustomer(id: Int!): Customer
+    getCustomer(id: ID!): Customer
     findCustomer: [Customer]
 
-    getLocation(id: Int!): Location
-    getAllLocations(customerId: Int!): [Location]
+    getLocation(id: ID!): Location
+    getAllLocations(customerId: ID!): [Location]
 
-    getEquipment(id: Int!): Equipment
-    getAllEquipment(customerId: Int!, cursor: String, limit: Int): EquipmentPagination
+    getEquipment(id: ID!): Equipment
+    getAllEquipment(customerId: ID!, cursor: String, limit: Int): EquipmentPagination
     filterEquipment(
-      customerId: Int!
-      locationIds: [Int]
+      customerId: ID!
+      locationIds: [ID]
       equipmentType: String
       cursor: String
       limit: Int
     ): EquipmentPagination
 
     getEquipmentStatus(
-      customerId: Int!
-      equipmentIds: [Int]
+      customerId: ID!
+      equipmentIds: [ID]
       statusDataTypes: [String]
     ): EquipmentStatus
 
     getAllStatus(
-      customerId: Int!
+      customerId: ID!
       statusDataTypes: [String]
       cursor: String
       limit: Int
     ): StatusPagination
 
-    getProfile(id: Int!): Profile
-    getAllProfiles(customerId: Int!, cursor: String, limit: Int, type: String): ProfilePagination
+    getProfile(id: ID!): Profile
+    getAllProfiles(customerId: ID!, cursor: String, limit: Int, type: String): ProfilePagination
 
-    getClientSession(customerId: Int!, macAddress: String!): [ClientSession]
+    getClientSession(customerId: ID!, macAddress: String!): [ClientSession]
     filterClientSessions(
-      customerId: Int!
-      locationIds: [Int]
+      customerId: ID!
+      locationIds: [ID]
       cursor: String
       limit: Int
     ): ClientSessionPagination
 
-    getAlarmCount(customerId: Int!): Int
-    getAllAlarms(customerId: Int!, cursor: String, limit: Int): AlarmPagination
+    getAlarmCount(customerId: ID!): Int
+    getAllAlarms(customerId: ID!, cursor: String, limit: Int): AlarmPagination
 
     filterServiceMetrics(
-      customerId: Int!
+      customerId: ID!
       fromTime: String!
       toTime: String!
       clientMacs: [String]
@@ -92,11 +92,11 @@ const typeDefs = gql`
   }
 
   type User {
-    id: Int!
+    id: ID!
     username: String!
     password: String
     role: String!
-    customerId: Int!
+    customerId: ID!
     lastModifiedTimestamp: String
   }
 
@@ -106,7 +106,7 @@ const typeDefs = gql`
   }
 
   type Customer {
-    id: Int!
+    id: ID!
     name: String!
   }
 
@@ -117,22 +117,22 @@ const typeDefs = gql`
   }
 
   type Location {
-    id: Int!
+    id: ID!
     locationType: String!
-    customerId: Int!
-    parentId: Int!
+    customerId: ID!
+    parentId: ID!
     name: String!
     details: JSONObject
     lastModifiedTimestamp: String
   }
 
   type Equipment {
-    id: Int!
+    id: ID!
     equipmentType: String!
     inventoryId: String!
-    customerId: Int!
-    profileId: Int!
-    locationId: Int!
+    customerId: ID!
+    profileId: ID!
+    locationId: ID!
     name: String!
     latitude: String
     longitude: String
@@ -167,7 +167,7 @@ const typeDefs = gql`
   }
 
   type Status {
-    customerId: Int!
+    customerId: ID!
     statusDataType: String
     lastModifiedTimestamp: String
     details: StatusDetails
@@ -193,11 +193,11 @@ const typeDefs = gql`
   }
 
   type Profile {
-    id: Int!
+    id: ID!
     profileType: String!
-    customerId: Int!
+    customerId: ID!
     name: String!
-    childProfileIds: [Int]
+    childProfileIds: [ID]
     childProfiles: [Profile]
     createdTimestamp: String
     lastModifiedTimestamp: String
@@ -211,7 +211,7 @@ const typeDefs = gql`
 
   type ClientSession {
     id: ID
-    customerId: Int!
+    customerId: ID!
     macAddress: String
     ipAddress: String
     hostname: String
@@ -230,8 +230,8 @@ const typeDefs = gql`
   }
 
   type ServiceMetric {
-    customerId: Int!
-    equipmentId: Int!
+    customerId: ID!
+    equipmentId: ID!
     dataType: String
     createdTimestamp: String
     rssi: Int
@@ -253,7 +253,7 @@ const typeDefs = gql`
   }
 
   type Alarm {
-    customerId: Int!
+    customerId: ID!
     alarmCode: String!
     severity: String!
     createdTimestamp: String
@@ -315,43 +315,43 @@ const typeDefs = gql`
     authenticateUser(email: String!, password: String!): Token
     updateToken(refreshToken: String!): Token
 
-    createUser(username: String!, password: String!, role: String!, customerId: Int!): User
+    createUser(username: String!, password: String!, role: String!, customerId: ID!): User
     updateUser(
-      id: Int!
+      id: ID!
       username: String!
       password: String!
       role: String!
-      customerId: Int!
+      customerId: ID!
       lastModifiedTimestamp: String
     ): User
-    deleteUser(id: Int!): User
+    deleteUser(id: ID!): User
 
-    createLocation(locationType: String!, customerId: Int!, parentId: Int!, name: String!): Location
+    createLocation(locationType: String!, customerId: ID!, parentId: ID!, name: String!): Location
     updateLocation(
-      id: Int!
+      id: ID!
       locationType: String!
-      customerId: Int!
-      parentId: Int!
+      customerId: ID!
+      parentId: ID!
       name: String!
       details: JSONObject
       lastModifiedTimestamp: String
     ): Location
-    deleteLocation(id: Int!): Location
+    deleteLocation(id: ID!): Location
 
     createEquipment(
       inventoryId: String!
-      customerId: Int!
-      profileId: Int!
-      locationId: Int!
+      customerId: ID!
+      profileId: ID!
+      locationId: ID!
       name: String!
     ): Equipment
     updateEquipment(
-      id: Int!
+      id: ID!
       equipmentType: String!
       inventoryId: String!
-      customerId: Int!
-      profileId: Int!
-      locationId: Int!
+      customerId: ID!
+      profileId: ID!
+      locationId: ID!
       name: String!
       latitude: String
       longitude: String
@@ -360,27 +360,27 @@ const typeDefs = gql`
       details: JSONObject
     ): Equipment
     updateEquipmentBulk(items: [EquipmentRrmUpdate]): GenericResponse
-    deleteEquipment(id: Int!): Equipment
+    deleteEquipment(id: ID!): Equipment
     updateEquipmentFirmware(equipmentId: ID, firmwareVersionId: ID): GenericResponse
 
     createProfile(
       profileType: String!
-      customerId: Int!
+      customerId: ID!
       name: String!
-      childProfileIds: [Int]
+      childProfileIds: [ID]
       details: JSONObject
     ): Profile
     updateProfile(
-      id: Int!
+      id: ID!
       profileType: String!
-      customerId: Int!
+      customerId: ID!
       name: String!
-      childProfileIds: [Int]
+      childProfileIds: [ID]
       createdTimestamp: String
       lastModifiedTimestamp: String
       details: JSONObject
     ): Profile
-    deleteProfile(id: Int!): Profile
+    deleteProfile(id: ID!): Profile
 
     updateOui(
       manufacturerAlias: String

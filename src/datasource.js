@@ -74,6 +74,11 @@ export class API extends RESTDataSource {
       customerId,
     });
   }
+  async updateCustomer(customer) {
+    return this.put('portal/customer', {
+      ...customer,
+    });
+  }
   async findCustomer() {
     return this.get('portal/customer/find', {
       criteria: '',

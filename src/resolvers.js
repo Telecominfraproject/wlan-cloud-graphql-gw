@@ -166,6 +166,10 @@ const resolvers = {
       return dataSources.api.deleteUser(id);
     },
 
+    updateCustomer: async (_, data, { dataSources }) => {
+      return dataSources.api.updateCustomer(data);
+    },
+
     createLocation: async (_, { locationType, customerId, parentId, name }, { dataSources }) => {
       return dataSources.api.createLocation({ locationType, customerId, parentId, name });
     },

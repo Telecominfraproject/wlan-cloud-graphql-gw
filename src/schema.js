@@ -109,6 +109,10 @@ const typeDefs = gql`
   type Customer {
     id: ID!
     name: String!
+    email: String
+    details: JSONObject
+    createdTimestamp: String
+    lastModifiedTimestamp: String
   }
 
   type Token {
@@ -326,6 +330,15 @@ const typeDefs = gql`
       lastModifiedTimestamp: String
     ): User
     deleteUser(id: ID!): User
+
+    updateCustomer(
+      id: ID!
+      email: String!
+      name: String!
+      details: JSONObject
+      createdTimestamp: String
+      lastModifiedTimestamp: String
+    ): Customer
 
     createLocation(locationType: String!, customerId: ID!, parentId: ID!, name: String!): Location
     updateLocation(

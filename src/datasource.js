@@ -350,6 +350,7 @@ export class API extends RESTDataSource {
   async getAllStatus(customerId, statusDataTypes, cursor, limit) {
     return this.get('portal/status/forCustomerWithFilter', {
       customerId,
+      equipmentIds: 0,
       statusDataTypes,
       paginationContext: buildPaginationContext(cursor, limit),
     });

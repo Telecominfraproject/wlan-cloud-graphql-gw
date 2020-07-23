@@ -49,6 +49,7 @@ const typeDefs = gql`
       cursor: String
       limit: Int
     ): ClientSessionPagination
+    getBlockedClients(customerId: ID!): [Client]
 
     getAlarmCount(customerId: ID!): Int
     getAllAlarms(customerId: ID!, cursor: String, limit: Int): AlarmPagination
@@ -232,6 +233,14 @@ const typeDefs = gql`
   type ClientSessionPagination {
     items: [ClientSession]
     context: PaginationContext
+  }
+
+  type Client {
+    customerId: ID!
+    macAddress: String
+    createdTimestamp: String
+    lastModifiedTimestamp: String
+    details: JSONObject
   }
 
   type ServiceMetric {
@@ -439,6 +448,14 @@ const typeDefs = gql`
       firmwareTrackId: ID!
       firmwareVersionId: ID!
     ): FirmwareTrackAssignment
+
+    updateClient(
+      customerId: ID!
+      macAddress: String
+      details: JSONObject
+      createdTimestamp: String
+      lastModifiedTimestamp: String
+    ): Client
   }
 `;
 

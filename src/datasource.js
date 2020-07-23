@@ -375,4 +375,15 @@ export class API extends RESTDataSource {
 
     return result && result.success && { fileName };
   }
+
+  async getBlockedClients(customerId) {
+    return this.get('portal/client/blocked', {
+      customerId,
+    });
+  }
+  async updateClient(data) {
+    return this.put('portal/client', {
+      ...data,
+    });
+  }
 }

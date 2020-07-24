@@ -60,9 +60,6 @@ const resolvers = {
     getBlockedClients: async (_, { customerId }, { dataSources }) => {
       return dataSources.api.getBlockedClients(customerId);
     },
-    updateClient: async (_, data, { dataSources }) => {
-      return dataSources.api.updateClient(data);
-    },
 
     getProfile: async (_, { id }, { dataSources }) => {
       return dataSources.api.getProfile(id);
@@ -325,6 +322,10 @@ const resolvers = {
       { dataSources }
     ) => {
       return dataSources.api.deleteFirmwareTrackAssignment(firmwareTrackId, firmwareVersionId);
+    },
+
+    updateClient: async (_, data, { dataSources }) => {
+      return dataSources.api.updateClient(data);
     },
   },
   Equipment: {

@@ -455,7 +455,7 @@ const resolvers = {
     hostname: ({ details }) => details.hostname,
     ssid: ({ details }) => details.ssid,
     radioType: ({ details }) => details.radioType,
-    signal: ({ details }) => details.metricDetails.rssi,
+    signal: ({ details }) => details.metricDetails && details.metricDetails.rssi,
     manufacturer: ({ macAddress }, args, { dataSources }) => {
       return (
         macAddress &&

@@ -449,13 +449,13 @@ const resolvers = {
     },
   },
   ClientSession: {
-    id: ({ macAddress }) => macAddress?.addressAsString,
-    macAddress: ({ macAddress }) => macAddress?.addressAsString,
-    ipAddress: ({ details }) => details?.ipAddress,
-    hostname: ({ details }) => details?.hostname,
-    ssid: ({ details }) => details?.ssid,
-    radioType: ({ details }) => details?.radioType,
-    signal: ({ details }) => details?.metricDetails?.rssi,
+    id: ({ macAddress }) => macAddress.addressAsString,
+    macAddress: ({ macAddress }) => macAddress.addressAsString,
+    ipAddress: ({ details }) => details.ipAddress,
+    hostname: ({ details }) => details.hostname,
+    ssid: ({ details }) => details.ssid,
+    radioType: ({ details }) => details.radioType,
+    signal: ({ details }) => details.metricDetails.rssi,
     manufacturer: ({ macAddress }, args, { dataSources }) => {
       return (
         macAddress &&
@@ -468,7 +468,7 @@ const resolvers = {
     },
   },
   Client: {
-    macAddress: ({ macAddress }) => macAddress?.addressAsString,
+    macAddress: ({ macAddress }) => macAddress.addressAsString,
   },
   Alarm: {
     equipment: ({ equipmentId }, args, { dataSources }) => {

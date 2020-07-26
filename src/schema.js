@@ -412,7 +412,7 @@ const typeDefs = gql`
     ): ManufacturerOuiDetails
 
     fileUpload(fileName: String, file: Upload): File
-    ouiUpload(fileName: String, file: Upload): File
+    ouiUpload(fileName: String, file: Upload): GenericResponse
 
     createFirmware(
       modelId: String!

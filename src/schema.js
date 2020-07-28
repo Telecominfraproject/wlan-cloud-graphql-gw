@@ -49,6 +49,7 @@ const typeDefs = gql`
       cursor: String
       limit: Int
     ): ClientSessionPagination
+    getClients(customerId: ID!, macAddress: [String]): [Client]
     getBlockedClients(customerId: ID!): [Client]
 
     getAlarmCount(customerId: ID!): Int

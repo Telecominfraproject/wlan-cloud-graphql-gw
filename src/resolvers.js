@@ -57,6 +57,9 @@ const resolvers = {
     ) => {
       return dataSources.api.filterClientSessions(customerId, locationIds, cursor, limit);
     },
+    getClients: async (_, { customerId, macAddress }, { dataSources }) => {
+      return dataSources.api.getClients(customerId, macAddress);
+    },
     getBlockedClients: async (_, { customerId }, { dataSources }) => {
       return dataSources.api.getBlockedClients(customerId);
     },

@@ -374,7 +374,7 @@ export class API extends RESTDataSource {
     });
   }
 
-  async getClientSession(customerId, macAddresses) {
+  async getClients(customerId, macAddresses) {
     return this.get('portal/client/inSet', {
       customerId,
       clientMacs: macAddresses,

@@ -327,6 +327,26 @@ const resolvers = {
       return dataSources.api.deleteFirmwareTrackAssignment(firmwareTrackId, firmwareVersionId);
     },
 
+    addBlockedClient: async (_, { customerId, macAddress }, { dataSources }) => {
+      const result = await dataSources.api.getClients(customerId, [macAddress]);
+
+      if (result && result.length) {
+        const client = { ...result[0] };
+        if (!client.details.blocklistDetails) {
+          client.details.blocklistDetails = {};
+        }
+        client.details.blocklistDetails.enabled = true;
+
+        return dataSources.api.updateClient({ ...client });
+      } else {
+        const details = {
+          blocklistDetails: { enabled: true },
+          model_type: 'ClientInfoDetails',
+        };
+
+        return dataSources.api.updateClient({ customerId, macAddress, details });
+      }
+    },
     updateClient: async (_, data, { dataSources }) => {
       return dataSources.api.updateClient(data);
     },

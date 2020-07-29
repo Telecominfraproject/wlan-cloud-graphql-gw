@@ -450,6 +450,10 @@ const typeDefs = gql`
       firmwareVersionId: ID!
     ): FirmwareTrackAssignment
 
+    addBlockedClient(
+      customerId: ID!
+      macAddress: String
+    ): Client
     updateClient(
       customerId: ID!
       macAddress: String

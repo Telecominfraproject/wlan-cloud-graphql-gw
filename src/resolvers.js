@@ -390,13 +390,12 @@ const resolvers = {
     details: ({ details }) => details || {},
   },
   EquipmentStatus: {
-    protocol: ({ items }) => items.find((i) => i.statusDataType === 'PROTOCOL') || {},
-    osPerformance: ({ items }) => items.find((i) => i.statusDataType === 'OS_PERFORMANCE') || {},
-    radioUtilization: ({ items }) =>
-      items.find((i) => i.statusDataType === 'RADIO_UTILIZATION') | {},
-    clientDetails: ({ items }) => items.find((i) => i.statusDataType === 'CLIENT_DETAILS') || {},
-    firmware: ({ items }) => items.find((i) => i.statusDataType === 'FIRMWARE' || {}),
-    dashboard: ({ items }) => items.find((i) => i.statusDataType === 'CUSTOMER_DASHBOARD') || {},
+    protocol: (items) => items.find((i) => i.statusDataType === 'PROTOCOL') || {},
+    osPerformance: (items) => items.find((i) => i.statusDataType === 'OS_PERFORMANCE') || {},
+    radioUtilization: (items) => items.find((i) => i.statusDataType === 'RADIO_UTILIZATION') || {},
+    clientDetails: (items) => items.find((i) => i.statusDataType === 'CLIENT_DETAILS') || {},
+    firmware: (items) => items.find((i) => i.statusDataType === 'FIRMWARE') || {},
+    dashboard: (items) => items.find((i) => i.statusDataType === 'CUSTOMER_DASHBOARD') || {},
   },
   Status: {
     detailsJSON: ({ details }) => details || {},

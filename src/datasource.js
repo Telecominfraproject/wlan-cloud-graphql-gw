@@ -162,11 +162,10 @@ export class API extends RESTDataSource {
   }
 
   async getEquipmentStatus(customerId, equipmentIds, statusDataTypes) {
-    return this.get('portal/status/forCustomerWithFilter', {
+    return this.get('portal/status/forEquipmentWithFilter', {
       customerId,
       equipmentIds,
       statusDataTypes,
-      paginationContext: buildPaginationContext(),
     });
   }
 

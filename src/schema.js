@@ -255,6 +255,7 @@ const typeDefs = gql`
     freeMemory: Int
     cpuUtilized: [Int]
     cpuTemperature: Int
+    detailsJSON: JSONObject
   }
 
   type ServiceMetricPagination {
@@ -450,10 +451,7 @@ const typeDefs = gql`
       firmwareVersionId: ID!
     ): FirmwareTrackAssignment
 
-    addBlockedClient(
-      customerId: ID!
-      macAddress: String
-    ): Client
+    addBlockedClient(customerId: ID!, macAddress: String): Client
     updateClient(
       customerId: ID!
       macAddress: String

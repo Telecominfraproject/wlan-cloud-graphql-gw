@@ -505,6 +505,7 @@ const resolvers = {
     freeMemory: ({ details }) => details.apPerformance.freeMemory,
     cpuUtilized: ({ details }) => details.apPerformance.cpuUtilized,
     cpuTemperature: ({ details }) => details.apPerformance.cpuTemperature,
+    detailsJSON: ({ details }) => details || {},
   },
   File: {
     baseUrl: ({}, args, { dataSources }) => {

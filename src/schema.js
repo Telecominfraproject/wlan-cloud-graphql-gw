@@ -208,6 +208,7 @@ const typeDefs = gql`
     childProfiles: [Profile]
     createdTimestamp: String
     lastModifiedTimestamp: String
+    equipmentCount: Int
     details: JSONObject
   }
 

@@ -470,6 +470,11 @@ const resolvers = {
     childProfiles: ({ childProfileIds }, args, { dataSources }) => {
       return dataSources.api.getProfilesById(childProfileIds);
     },
+    equipmentCount: async ({ id }, args, { dataSources }) => {
+      const result = await dataSources.api.getProfileCountById(id);
+
+      return result && result.value2;
+    },
   },
   ClientSession: {
     id: ({ macAddress }) => macAddress.addressAsString,

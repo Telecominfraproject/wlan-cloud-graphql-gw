@@ -30,6 +30,14 @@ export class API extends RESTDataSource {
     return keys.map((key) => results[key]);
   });
 
+  profileLoader = new DataLoader(async (keys) => {
+    const results = await this.get('portal/profile/equipmentCounts', {
+      profileIdSet: keys,
+    });
+
+    return keys.map((id) => results.find((i) => i.value1 === id));
+  });
+
   async createToken(userId, password) {
     return this.post('management/v1/oauth2/token', {
       userId,
@@ -220,6 +228,11 @@ export class API extends RESTDataSource {
     return this.get('portal/profile/inSet', {
       profileIdSet,
     });
+  }
+  async getProfileCountById(id) {
+    const result = await this.profileLoader.load(id);
+    console.log(result);
+    return result;
   }
 
   async getAllAlarms(customerId, cursor, limit) {

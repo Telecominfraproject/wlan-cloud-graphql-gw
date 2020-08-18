@@ -3,11 +3,12 @@ import DataLoader from 'dataloader';
 
 const fs = require('fs').promises;
 
-const buildPaginationContext = (cursor, limit) =>
+const buildPaginationContext = (cursor, limit, context) =>
   JSON.stringify({
+    cursor,
+    ...context,
     model_type: 'PaginationContext',
     maxItemsPerPage: limit,
-    cursor,
   });
 
 export class API extends RESTDataSource {
@@ -70,10 +71,10 @@ export class API extends RESTDataSource {
       portalUserId,
     });
   }
-  async getAllUsers(customerId, cursor, limit) {
+  async getAllUsers(customerId, cursor, limit, context) {
     return this.get('portal/portalUser/forCustomer', {
       customerId,
-      paginationContext: buildPaginationContext(cursor, limit),
+      paginationContext: buildPaginationContext(cursor, limit, context),
     });
   }
 
@@ -141,13 +142,13 @@ export class API extends RESTDataSource {
       equipmentId,
     });
   }
-  async getAllEquipment(customerId, cursor, limit) {
+  async getAllEquipment(customerId, cursor, limit, context) {
     return this.get('portal/equipment/forCustomer', {
       customerId,
-      paginationContext: buildPaginationContext(cursor, limit),
+      paginationContext: buildPaginationContext(cursor, limit, context),
     });
   }
-  async filterEquipment(customerId, locationIds, equipmentType, cursor, limit) {
+  async filterEquipment(customerId, locationIds, equipmentType, cursor, limit, context) {
     if (locationIds && locationIds.length === 0) {
       return null;
     }
@@ -155,7 +156,7 @@ export class API extends RESTDataSource {
       customerId,
       locationIds,
       equipmentType,
-      paginationContext: buildPaginationContext(cursor, limit),
+      paginationContext: buildPaginationContext(cursor, limit, context),
     });
   }
   async updateEquipmentBulk(items) {
@@ -183,11 +184,11 @@ export class API extends RESTDataSource {
       clientMacs: [macAddress],
     });
   }
-  async filterClientSessions(customerId, locationIds, cursor, limit) {
+  async filterClientSessions(customerId, locationIds, cursor, limit, context) {
     return this.get('portal/client/session/forCustomer', {
       customerId,
       locationIds,
-      paginationContext: buildPaginationContext(cursor, limit),
+      paginationContext: buildPaginationContext(cursor, limit, context),
     });
   }
 
@@ -211,10 +212,10 @@ export class API extends RESTDataSource {
       profileId,
     });
   }
-  async getAllProfiles({ customerId, cursor, limit, type }) {
+  async getAllProfiles({ customerId, cursor, limit, type, context }) {
     const result = await this.get('portal/profile/forCustomer', {
       customerId,
-      paginationContext: buildPaginationContext(cursor, limit),
+      paginationContext: buildPaginationContext(cursor, limit, context),
     });
 
     if (type && result.items) {
@@ -230,15 +231,13 @@ export class API extends RESTDataSource {
     });
   }
   async getProfileCountById(id) {
-    const result = await this.profileLoader.load(id);
-    console.log(result);
-    return result;
+    return this.profileLoader.load(id);
   }
 
-  async getAllAlarms(customerId, cursor, limit) {
+  async getAllAlarms(customerId, cursor, limit, context) {
     return this.get('portal/alarm/forCustomer', {
       customerId,
-      paginationContext: buildPaginationContext(cursor, limit),
+      paginationContext: buildPaginationContext(cursor, limit, context),
     });
   }
   async getAllAlarmsForEquipment(customerId, equipmentIds) {
@@ -263,7 +262,8 @@ export class API extends RESTDataSource {
     clientMacs,
     dataTypes,
     cursor,
-    limit
+    limit,
+    context
   ) {
     return this.get('portal/serviceMetric/forCustomer', {
       customerId,
@@ -272,17 +272,26 @@ export class API extends RESTDataSource {
       equipmentIds: equipmentIds || [],
       clientMacs: clientMacs || [],
       dataTypes,
-      paginationContext: buildPaginationContext(cursor, limit),
+      paginationContext: buildPaginationContext(cursor, limit, context),
     });
   }
-  async filterSystemEvents(customerId, fromTime, toTime, equipmentIds, dataTypes, cursor, limit) {
+  async filterSystemEvents(
+    customerId,
+    fromTime,
+    toTime,
+    equipmentIds,
+    dataTypes,
+    cursor,
+    limit,
+    context
+  ) {
     return this.get('portal/systemEvent/forCustomer', {
       customerId,
       fromTime,
       toTime,
       equipmentIds: equipmentIds || [],
       dataTypes: dataTypes || [],
-      paginationContext: buildPaginationContext(cursor, limit),
+      paginationContext: buildPaginationContext(cursor, limit, context),
     });
   }
 
@@ -359,12 +368,12 @@ export class API extends RESTDataSource {
     });
   }
 
-  async getAllStatus(customerId, statusDataTypes, cursor, limit) {
+  async getAllStatus(customerId, statusDataTypes, cursor, limit, context) {
     return this.get('portal/status/forCustomerWithFilter', {
       customerId,
       equipmentIds: 0,
       statusDataTypes,
-      paginationContext: buildPaginationContext(cursor, limit),
+      paginationContext: buildPaginationContext(cursor, limit, context),
     });
   }
 

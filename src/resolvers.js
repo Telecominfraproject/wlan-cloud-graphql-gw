@@ -7,8 +7,8 @@ const resolvers = {
     getUser: async (_, { id }, { dataSources }) => {
       return dataSources.api.getUser(id);
     },
-    getAllUsers: async (_, { customerId, cursor, limit }, { dataSources }) => {
-      return dataSources.api.getAllUsers(customerId, cursor, limit);
+    getAllUsers: async (_, { customerId, cursor, limit, context }, { dataSources }) => {
+      return dataSources.api.getAllUsers(customerId, cursor, limit, context);
     },
 
     getCustomer: async (_, { id }, { dataSources }) => {
@@ -28,15 +28,22 @@ const resolvers = {
     getEquipment: async (_, { id }, { dataSources }) => {
       return dataSources.api.getEquipment(id);
     },
-    getAllEquipment: async (_, { customerId, cursor, limit }, { dataSources }) => {
-      return dataSources.api.getAllEquipment(customerId, cursor, limit);
+    getAllEquipment: async (_, { customerId, cursor, limit, context }, { dataSources }) => {
+      return dataSources.api.getAllEquipment(customerId, cursor, limit, context);
     },
     filterEquipment: async (
       _,
-      { customerId, locationIds, equipmentType, cursor, limit },
+      { customerId, locationIds, equipmentType, cursor, limit, context },
       { dataSources }
     ) => {
-      return dataSources.api.filterEquipment(customerId, locationIds, equipmentType, cursor, limit);
+      return dataSources.api.filterEquipment(
+        customerId,
+        locationIds,
+        equipmentType,
+        cursor,
+        limit,
+        context
+      );
     },
 
     getEquipmentStatus: async (
@@ -52,10 +59,10 @@ const resolvers = {
     },
     filterClientSessions: async (
       _,
-      { customerId, locationIds, cursor, limit },
+      { customerId, locationIds, cursor, limit, context },
       { dataSources }
     ) => {
-      return dataSources.api.filterClientSessions(customerId, locationIds, cursor, limit);
+      return dataSources.api.filterClientSessions(customerId, locationIds, cursor, limit, context);
     },
     getClients: async (_, { customerId, macAddress }, { dataSources }) => {
       return dataSources.api.getClients(customerId, macAddress);
@@ -67,12 +74,12 @@ const resolvers = {
     getProfile: async (_, { id }, { dataSources }) => {
       return dataSources.api.getProfile(id);
     },
-    getAllProfiles: async (_, { customerId, cursor, limit, type }, { dataSources }) => {
-      return dataSources.api.getAllProfiles({ customerId, cursor, limit, type });
+    getAllProfiles: async (_, { customerId, cursor, limit, type, context }, { dataSources }) => {
+      return dataSources.api.getAllProfiles({ customerId, cursor, limit, type, context });
     },
 
-    getAllAlarms: async (_, { customerId, cursor, limit }, { dataSources }) => {
-      return dataSources.api.getAllAlarms(customerId, cursor, limit);
+    getAllAlarms: async (_, { customerId, cursor, limit, context }, { dataSources }) => {
+      return dataSources.api.getAllAlarms(customerId, cursor, limit, context);
     },
     getAlarmCount: async (_, { customerId }, { dataSources }) => {
       const result = await dataSources.api.getAlarmCount(customerId);
@@ -89,7 +96,7 @@ const resolvers = {
 
     filterServiceMetrics: async (
       _,
-      { customerId, fromTime, toTime, clientMacs, equipmentIds, dataTypes, cursor, limit },
+      { customerId, fromTime, toTime, clientMacs, equipmentIds, dataTypes, cursor, limit, context },
       { dataSources }
     ) => {
       return dataSources.api.filterServiceMetrics(
@@ -100,12 +107,13 @@ const resolvers = {
         clientMacs,
         dataTypes,
         cursor,
-        limit
+        limit,
+        context
       );
     },
     filterSystemEvents: async (
       _,
-      { customerId, fromTime, toTime, equipmentIds, dataTypes, cursor, limit },
+      { customerId, fromTime, toTime, equipmentIds, dataTypes, cursor, limit, context },
       { dataSources }
     ) => {
       return dataSources.api.filterSystemEvents(
@@ -115,7 +123,8 @@ const resolvers = {
         equipmentIds,
         dataTypes,
         cursor,
-        limit
+        limit,
+        context
       );
     },
 
@@ -139,8 +148,12 @@ const resolvers = {
       return dataSources.api.getFirmwareTrack(firmwareTrackName);
     },
 
-    getAllStatus: async (_, { customerId, statusDataTypes, cursor, limit }, { dataSources }) => {
-      return dataSources.api.getAllStatus(customerId, statusDataTypes, cursor, limit);
+    getAllStatus: async (
+      _,
+      { customerId, statusDataTypes, cursor, limit, context },
+      { dataSources }
+    ) => {
+      return dataSources.api.getAllStatus(customerId, statusDataTypes, cursor, limit, context);
     },
   },
   Mutation: {

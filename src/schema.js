@@ -8,7 +8,7 @@ const typeDefs = gql`
 
   type Query {
     getUser(id: ID!): User
-    getAllUsers(customerId: ID!, cursor: String, limit: Int): UserPagination
+    getAllUsers(customerId: ID!, cursor: String, limit: Int, context: JSONObject): UserPagination
 
     getCustomer(id: ID!): Customer
     findCustomer: [Customer]
@@ -17,13 +17,19 @@ const typeDefs = gql`
     getAllLocations(customerId: ID!): [Location]
 
     getEquipment(id: ID!): Equipment
-    getAllEquipment(customerId: ID!, cursor: String, limit: Int): EquipmentPagination
+    getAllEquipment(
+      customerId: ID!
+      cursor: String
+      limit: Int
+      context: JSONObject
+    ): EquipmentPagination
     filterEquipment(
       customerId: ID!
       locationIds: [ID]
       equipmentType: String
       cursor: String
       limit: Int
+      context: JSONObject
     ): EquipmentPagination
 
     getEquipmentStatus(
@@ -37,10 +43,17 @@ const typeDefs = gql`
       statusDataTypes: [String]
       cursor: String
       limit: Int
+      context: JSONObject
     ): StatusPagination
 
     getProfile(id: ID!): Profile
-    getAllProfiles(customerId: ID!, cursor: String, limit: Int, type: String): ProfilePagination
+    getAllProfiles(
+      customerId: ID!
+      cursor: String
+      limit: Int
+      type: String
+      context: JSONObject
+    ): ProfilePagination
 
     getClientSession(customerId: ID!, macAddress: String!): [ClientSession]
     filterClientSessions(
@@ -48,12 +61,13 @@ const typeDefs = gql`
       locationIds: [ID]
       cursor: String
       limit: Int
+      context: JSONObject
     ): ClientSessionPagination
     getClients(customerId: ID!, macAddress: [String]): [Client]
     getBlockedClients(customerId: ID!): [Client]
 
     getAlarmCount(customerId: ID!): Int
-    getAllAlarms(customerId: ID!, cursor: String, limit: Int): AlarmPagination
+    getAllAlarms(customerId: ID!, cursor: String, limit: Int, context: JSONObject): AlarmPagination
 
     filterServiceMetrics(
       customerId: ID!
@@ -64,6 +78,7 @@ const typeDefs = gql`
       dataTypes: [String]
       cursor: String
       limit: Int
+      context: JSONObject
     ): ServiceMetricPagination
 
     filterSystemEvents(
@@ -74,6 +89,7 @@ const typeDefs = gql`
       dataTypes: [String]
       cursor: String
       limit: Int
+      context: JSONObject
     ): SystemEventPagination
 
     getOui(oui: String!): ManufacturerOuiDetails
@@ -105,7 +121,7 @@ const typeDefs = gql`
 
   type UserPagination {
     items: [User]
-    context: PaginationContext
+    context: JSONObject
   }
 
   type Customer {
@@ -156,7 +172,7 @@ const typeDefs = gql`
 
   type EquipmentPagination {
     items: [Equipment]
-    context: PaginationContext
+    context: JSONObject
   }
 
   input EquipmentRrmUpdate {
@@ -196,7 +212,7 @@ const typeDefs = gql`
 
   type StatusPagination {
     items: [Status]
-    context: PaginationContext
+    context: JSONObject
   }
 
   type Profile {
@@ -214,7 +230,7 @@ const typeDefs = gql`
 
   type ProfilePagination {
     items: [Profile]
-    context: PaginationContext
+    context: JSONObject
   }
 
   type ClientSession {
@@ -234,7 +250,7 @@ const typeDefs = gql`
 
   type ClientSessionPagination {
     items: [ClientSession]
-    context: PaginationContext
+    context: JSONObject
   }
 
   type Client {
@@ -261,12 +277,12 @@ const typeDefs = gql`
 
   type ServiceMetricPagination {
     items: [ServiceMetric]
-    context: PaginationContext
+    context: JSONObject
   }
 
   type SystemEventPagination {
     items: [JSONObject]
-    context: PaginationContext
+    context: JSONObject
   }
 
   type Alarm {
@@ -281,7 +297,7 @@ const typeDefs = gql`
 
   type AlarmPagination {
     items: [Alarm]
-    context: PaginationContext
+    context: JSONObject
   }
 
   type Firmware {

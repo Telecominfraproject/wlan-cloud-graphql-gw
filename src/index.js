@@ -1,6 +1,7 @@
-import { ApolloServer } from 'apollo-server';
-import { API } from './datasource';
+const express = require('express');
+const { ApolloServer } = require('apollo-server-express');
 
+import { API } from './datasource';
 const typeDefs = require('./schema');
 const resolvers = require('./resolvers');
 
@@ -8,6 +9,14 @@ const resolvers = require('./resolvers');
 if (process.env.NODE_ENV !== 'production') {
   process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 }
+
+// CORS configuration
+const corsOptions = {
+  origin: 'http://localhost:3000',
+  credentials: true,
+};
+
+const app = express();
 
 // The ApolloServer constructor requires two parameters: your schema
 // definition and your set of resolvers.
@@ -23,7 +32,17 @@ const server = new ApolloServer({
   },
 });
 
-// The `listen` method launches a web server.
-server.listen().then(({ url }) => {
-  console.log(`🚀  Server ready at ${url}`);
+// Apply Middleware
+server.applyMiddleware({
+  app,
+  cors: corsOptions,
+  path: '/graphql',
+  bodyParserConfig: {
+    limit: '10mb',
+  },
 });
+
+// The `listen` method launches a web server.
+app.listen({ port: 4000 }, () =>
+  console.log(`🚀 Server ready at http://localhost:4000${server.graphqlPath}`)
+);

@@ -10,12 +10,6 @@ if (process.env.NODE_ENV !== 'production') {
   process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 }
 
-// CORS configuration
-const corsOptions = {
-  origin: 'http://localhost:3000',
-  credentials: true,
-};
-
 const app = express();
 
 // The ApolloServer constructor requires two parameters: your schema
@@ -35,7 +29,6 @@ const server = new ApolloServer({
 // Apply Middleware
 server.applyMiddleware({
   app,
-  cors: corsOptions,
   path: '/graphql',
   bodyParserConfig: {
     limit: '10mb',

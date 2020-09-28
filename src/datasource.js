@@ -319,12 +319,14 @@ export class API extends RESTDataSource {
     return this.post('portal/firmware/version', {
       ...firmware,
       equipmentType: 'AP',
+      validationMethod: 'MD5_CHECKSUM',
     });
   }
   async updateFirmware(firmware) {
     return this.put('portal/firmware/version', {
       ...firmware,
       equipmentType: 'AP',
+      validationMethod: 'MD5_CHECKSUM',
     });
   }
   async deleteFirmware(id) {

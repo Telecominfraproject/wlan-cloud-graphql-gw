@@ -404,6 +404,9 @@ const typeDefs = gql`
     updateEquipmentBulk(items: [EquipmentRrmUpdate]): GenericResponse
     deleteEquipment(id: ID!): Equipment
     updateEquipmentFirmware(equipmentId: ID, firmwareVersionId: ID): GenericResponse
+    requestEquipmentSwitchBank(equipmentId: ID): GenericResponse
+    requestEquipmentReboot(equipmentId: ID): GenericResponse
+    requestEquipmentFactoryReset(equipmentId: ID): GenericResponse
 
     createProfile(
       profileType: String!

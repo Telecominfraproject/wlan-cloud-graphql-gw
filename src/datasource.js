@@ -169,6 +169,21 @@ export class API extends RESTDataSource {
       `portal/equipmentGateway/requestFirmwareUpdate?equipmentId=${equipmentId}&firmwareVersionId=${firmwareVersionId}`
     );
   }
+  async requestEquipmentSwitchBank(equipmentId) {
+    return this.post(
+      `portal/equipmentGateway/requestApSwitchSoftwareBank?equipmentId=${equipmentId}`
+    );
+  }
+  async requestEquipmentReboot(equipmentId) {
+    return this.post(
+      `portal/equipmentGateway/requestApReboot?equipmentId=${equipmentId}`
+    );
+  }
+  async requestEquipmentFactoryReset(equipmentId) {
+    return this.post(
+      `portal/equipmentGateway/requestApFactoryReset?equipmentId=${equipmentId}`
+    );
+  }
 
   async getEquipmentStatus(customerId, equipmentIds, statusDataTypes) {
     return this.get('portal/status/forEquipmentWithFilter', {
@@ -390,11 +405,19 @@ export class API extends RESTDataSource {
   }
 
   async ouiUpload(fileName, file) {
-    return this.post(`portal/manufacturer/oui/upload?fileName=${fileName}`, file, {
-      headers: {
-        'Content-Type': 'application/octet-stream',
-      },
-    });
+    return file
+      .then((f) => {
+        return this.post(
+          `portal/manufacturer/oui/upload?fileName=${fileName}`,
+          f.createReadStream(),
+          {
+            headers: {
+              'Content-Type': 'application/octet-stream',
+            },
+          }
+        );
+      })
+      .catch((e) => console.log(e));
   }
 
   async getClients(customerId, macAddresses) {

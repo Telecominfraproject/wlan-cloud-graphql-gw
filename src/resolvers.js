@@ -266,6 +266,15 @@ const resolvers = {
     updateEquipmentFirmware: async (_, { equipmentId, firmwareVersionId }, { dataSources }) => {
       return dataSources.api.updateEquipmentFirmware(equipmentId, firmwareVersionId);
     },
+    requestEquipmentSwitchBank: async (_, { equipmentId }, { dataSources }) => {
+      return dataSources.api.requestEquipmentSwitchBank(equipmentId);
+    },
+    requestEquipmentReboot: async (_, { equipmentId }, { dataSources }) => {
+      return dataSources.api.requestEquipmentReboot(equipmentId);
+    },
+    requestEquipmentFactoryReset: async (_, { equipmentId }, { dataSources }) => {
+      return dataSources.api.requestEquipmentFactoryReset(equipmentId);
+    },
 
     createProfile: async (
       _,

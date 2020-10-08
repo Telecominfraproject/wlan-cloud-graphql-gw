@@ -175,14 +175,10 @@ export class API extends RESTDataSource {
     );
   }
   async requestEquipmentReboot(equipmentId) {
-    return this.post(
-      `portal/equipmentGateway/requestApReboot?equipmentId=${equipmentId}`
-    );
+    return this.post(`portal/equipmentGateway/requestApReboot?equipmentId=${equipmentId}`);
   }
   async requestEquipmentFactoryReset(equipmentId) {
-    return this.post(
-      `portal/equipmentGateway/requestApFactoryReset?equipmentId=${equipmentId}`
-    );
+    return this.post(`portal/equipmentGateway/requestApFactoryReset?equipmentId=${equipmentId}`);
   }
 
   async getEquipmentStatus(customerId, equipmentIds, statusDataTypes) {
@@ -405,19 +401,11 @@ export class API extends RESTDataSource {
   }
 
   async ouiUpload(fileName, file) {
-    return file
-      .then((f) => {
-        return this.post(
-          `portal/manufacturer/oui/upload?fileName=${fileName}`,
-          f.createReadStream(),
-          {
-            headers: {
-              'Content-Type': 'application/octet-stream',
-            },
-          }
-        );
-      })
-      .catch((e) => console.log(e));
+    return this.post(`portal/manufacturer/oui/upload?fileName=${fileName}`, file, {
+      headers: {
+        'Content-Type': 'application/octet-stream',
+      },
+    });
   }
 
   async getClients(customerId, macAddresses) {

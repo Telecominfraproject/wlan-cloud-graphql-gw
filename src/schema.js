@@ -7,6 +7,8 @@ const typeDefs = gql`
   scalar JSONObject
 
   type Query {
+    getApiUrl: String
+
     getUser(id: ID!): User
     getAllUsers(customerId: ID!, cursor: String, limit: Int, context: JSONObject): UserPagination
 

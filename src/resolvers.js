@@ -155,6 +155,10 @@ const resolvers = {
     ) => {
       return dataSources.api.getAllStatus(customerId, statusDataTypes, cursor, limit, context);
     },
+
+    getApiUrl: async (_, {}, { dataSources }) => {
+      return dataSources.api.baseURL;
+    },
   },
   Mutation: {
     authenticateUser: async (_, { email, password }, { dataSources }) => {

@@ -5,6 +5,7 @@ on:
     # Publish `master` as Docker `latest` image.
     branches:
       - master
+      - Testing
 
     # Publish `v1.2.3` tags as releases.
     tags:
@@ -45,7 +46,23 @@ jobs:
       - uses: actions/checkout@v2
         with:
           ssh-key: ${{ secrets.GH_AUTOMATION_KEY }}
-
+      
+      - name: Adding property file with component version and commit hash 
+        run: |
+          # Strip git ref prefix from version
+          VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
+          
+          # Strip "v" prefix from tag name
+          [[ "${{ github.ref }}" == "refs/tags/"* ]] && VERSION=$(echo $VERSION | sed -e 's/^v//')
+          
+          # Use Docker `latest` tag convention
+          [ "$VERSION" == "master" ] && VERSION=latest
+          
+          TIMESTAMP=$(date +'%Y-%m-%d')
+          echo date=$TIMESTAMP > commit.properties
+          echo commitId=$GITHUB_SHA >> commit.properties
+          echo projectVersion=$VERSION>> commit.properties
+          
       - name: Build image
         run: docker build . --file Dockerfile --tag image
         
@@ -74,5 +91,5 @@ jobs:
           echo IMAGE_ID=$IMAGE_ID
           echo VERSION=$VERSION
 
-          docker tag image $IMAGE_ID:$VERSION
-          docker push $IMAGE_ID:$VERSION
+          docker tag image $IMAGE_ID:$VERSION-AJ
+          docker push $IMAGE_ID:$VERSION-AJ

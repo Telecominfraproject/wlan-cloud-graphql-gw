@@ -58,9 +58,9 @@ jobs:
           [ "$VERSION" == "master" ] && VERSION=latest
           
           TIMESTAMP=$(date +'%Y-%m-%d')
-          echo date=$TIMESTAMP > app/commit.properties
-          echo commitId=$GITHUB_SHA >> app/commit.properties
-          echo projectVersion=$VERSION>> app/commit.properties
+          echo date=$TIMESTAMP > commit.properties
+          echo commitId=$GITHUB_SHA >> commit.properties
+          echo projectVersion=$VERSION>> commit.properties
           
       - name: Build image
         run: docker build . --file Dockerfile --tag image

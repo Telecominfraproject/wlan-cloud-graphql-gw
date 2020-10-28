@@ -14,7 +14,7 @@ const buildPaginationContext = (cursor, limit, context) =>
 export class API extends RESTDataSource {
   get baseURL() {
     if (process.env.NODE_ENV !== 'production' && !process.env.API) {
-      return 'https://localhost:9091/';
+      return 'https://wlan-portal-svc.zone3.lab.connectus.ai/';
     }
     return 'https://' + process.env.API + '/';
   }
@@ -224,17 +224,11 @@ export class API extends RESTDataSource {
     });
   }
   async getAllProfiles({ customerId, cursor, limit, type, context }) {
-    const result = await this.get('portal/profile/forCustomer', {
+    return this.get('portal/profile/forCustomer', {
       customerId,
+      ...(type && { profileType: type }),
       paginationContext: buildPaginationContext(cursor, limit, context),
     });
-
-    if (type && result.items) {
-      result.items = result.items.filter((i) => i.profileType === type);
-      return result;
-    }
-
-    return result;
   }
   async getProfilesById(profileIdSet) {
     return this.get('portal/profile/inSet', {

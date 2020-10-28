@@ -14,7 +14,7 @@ const buildPaginationContext = (cursor, limit, context) =>
 export class API extends RESTDataSource {
   get baseURL() {
     if (process.env.NODE_ENV !== 'production' && !process.env.API) {
-      return 'https://wlan-portal-svc.zone3.lab.connectus.ai/';
+      return 'https://localhost:9091/';
     }
     return 'https://' + process.env.API + '/';
   }

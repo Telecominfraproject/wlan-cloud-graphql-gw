@@ -116,7 +116,7 @@ const typeDefs = gql`
     id: ID!
     username: String!
     password: String
-    role: String!
+    roles: [String]
     customerId: ID!
     lastModifiedTimestamp: String
   }
@@ -350,12 +350,12 @@ const typeDefs = gql`
     authenticateUser(email: String!, password: String!): Token
     updateToken(refreshToken: String!): Token
 
-    createUser(username: String!, password: String!, role: String!, customerId: ID!): User
+    createUser(username: String!, password: String!, roles: [String], customerId: ID!): User
     updateUser(
       id: ID!
       username: String!
       password: String!
-      role: String!
+      roles: [String]
       customerId: ID!
       lastModifiedTimestamp: String
     ): User

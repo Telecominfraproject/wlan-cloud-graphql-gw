@@ -168,19 +168,19 @@ const resolvers = {
       return dataSources.api.updateToken(refreshToken);
     },
 
-    createUser: async (_, { username, password, role, customerId }, { dataSources }) => {
-      return dataSources.api.createUser({ username, password, role, customerId });
+    createUser: async (_, { username, password, roles, customerId }, { dataSources }) => {
+      return dataSources.api.createUser({ username, password, roles, customerId });
     },
     updateUser: async (
       _,
-      { id, username, password, role, customerId, lastModifiedTimestamp },
+      { id, username, password, roles, customerId, lastModifiedTimestamp },
       { dataSources }
     ) => {
       return dataSources.api.updateUser({
         id,
         username,
         password,
-        role,
+        roles,
         customerId,
         lastModifiedTimestamp,
       });

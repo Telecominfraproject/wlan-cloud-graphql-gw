@@ -238,6 +238,7 @@ const resolvers = {
         profileId,
         locationId,
         name,
+        baseMacAddress,
         latitude,
         longitude,
         serial,
@@ -254,6 +255,7 @@ const resolvers = {
         profileId,
         locationId,
         name,
+        baseMacAddress,
         latitude,
         longitude,
         serial,
@@ -378,6 +380,15 @@ const resolvers = {
     },
   },
   Equipment: {
+    manufacturer: ({ baseMacAddress }, args, { dataSources }) => {
+      return (
+        baseMacAddress &&
+        baseMacAddress.addressAsString &&
+        dataSources.api.getOuiLookup(
+          baseMacAddress.addressAsString.replace(/[:-]/g, '').substring(0, 6)
+        )
+      );
+    },
     profile: ({ profileId }, args, { dataSources }) => {
       return dataSources.api.getProfile(profileId);
     },
@@ -450,7 +461,7 @@ const resolvers = {
         reportedMacAddr &&
         reportedMacAddr.addressAsString &&
         dataSources.api.getOuiLookup(
-          reportedMacAddr.addressAsString.replace(/:/g, '').substring(0, 6)
+          reportedMacAddr.addressAsString.replace(/[:-]/g, '').substring(0, 6)
         )
       );
     },
@@ -514,7 +525,9 @@ const resolvers = {
       return (
         macAddress &&
         macAddress.addressAsString &&
-        dataSources.api.getOuiLookup(macAddress.addressAsString.replace(/:/g, '').substring(0, 6))
+        dataSources.api.getOuiLookup(
+          macAddress.addressAsString.replace(/[:-]/g, '').substring(0, 6)
+        )
       );
     },
     equipment: ({ equipmentId }, args, { dataSources }) => {

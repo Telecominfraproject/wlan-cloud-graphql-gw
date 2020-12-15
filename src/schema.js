@@ -159,6 +159,8 @@ const typeDefs = gql`
     profileId: ID!
     locationId: ID!
     name: String!
+    baseMacAddress: String
+    manufacturer: String
     latitude: String
     longitude: String
     serial: String
@@ -397,6 +399,7 @@ const typeDefs = gql`
       profileId: ID!
       locationId: ID!
       name: String!
+      baseMacAddress: String
       latitude: String
       longitude: String
       serial: String

@@ -380,7 +380,7 @@ const resolvers = {
     },
   },
   Equipment: {
-    macAddress: ({ baseMacAddress }) => baseMacAddress.addressAsString,
+    baseMacAddress: ({ baseMacAddress }) => baseMacAddress.addressAsString,
     manufacturer: ({ baseMacAddress }, args, { dataSources }) => {
       return (
         baseMacAddress &&

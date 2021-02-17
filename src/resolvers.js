@@ -255,7 +255,7 @@ const resolvers = {
         profileId,
         locationId,
         name,
-        baseMacAddress,
+        baseMacAddress: { addressAsString: baseMacAddress },
         latitude,
         longitude,
         serial,

@@ -397,7 +397,14 @@ const resolvers = {
       return dataSources.api.getEquipmentStatus(
         customerId,
         [id],
-        ['PROTOCOL', 'OS_PERFORMANCE', 'RADIO_UTILIZATION', 'CLIENT_DETAILS', 'FIRMWARE']
+        [
+          'PROTOCOL',
+          'OS_PERFORMANCE',
+          'RADIO_UTILIZATION',
+          'CLIENT_DETAILS',
+          'FIRMWARE',
+          'RADIO_CHANNEL',
+        ]
       );
     },
     channel: ({ details }) => {
@@ -434,6 +441,7 @@ const resolvers = {
     clientDetails: (items) => items.find((i) => i.statusDataType === 'CLIENT_DETAILS') || {},
     firmware: (items) => items.find((i) => i.statusDataType === 'FIRMWARE') || {},
     dashboard: (items) => items.find((i) => i.statusDataType === 'CUSTOMER_DASHBOARD') || {},
+    channel: (items) => items.find((i) => i.statusDataType === 'RADIO_CHANNEL') || {},
   },
   Status: {
     detailsJSON: ({ details }) => details || {},

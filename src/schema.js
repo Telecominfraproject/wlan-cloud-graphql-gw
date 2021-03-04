@@ -191,6 +191,7 @@ const typeDefs = gql`
     clientDetails: Status
     firmware: Status
     dashboard: Status
+    channel: Status
   }
 
   type Status {

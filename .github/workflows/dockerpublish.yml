@@ -5,6 +5,7 @@ on:
     # Publish `master` as Docker `latest` image.
     branches:
       - master
+      - 'release/**'
 
     # Publish `v1.2.3` tags as releases.
     tags:
@@ -14,8 +15,8 @@ on:
   pull_request:
 
   schedule:
-      # runs nightly build at 5AM
-      - cron:  '00 09 * * *'
+    # runs nightly build at 5AM
+    - cron: '00 09 * * *'
 
 env:
   IMAGE_NAME: wlan-cloud-graphql-gw
@@ -49,31 +50,34 @@ jobs:
       - uses: actions/checkout@v2
         with:
           ssh-key: ${{ secrets.GH_AUTOMATION_KEY }}
-    
-      - name: Adding property file with component version and commit hash 
+
+      - name: Adding property file with component version and commit hash
         run: |
           # Strip git ref prefix from version
           VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
-          
+
           # Strip "v" prefix from tag name
           [[ "${{ github.ref }}" == "refs/tags/"* ]] && VERSION=$(echo $VERSION | sed -e 's/^v//')
-          
+
+          # Create a release snapshot if we are on release branch
+          [[ "${{ github.ref }}" == "refs/heads/release/"* ]] && VERSION=$(echo "${{ github.ref }}" | sed -e 's/refs\/heads\/release\/[v]//' | awk '{print $1"-SNAPSHOT"}')
+
           # Use Docker `latest` tag convention
-          [ "$VERSION" == "master" ] && VERSION=0.0.1-SNAPSHOT
-          
+          [ "$VERSION" == "master" ] && VERSION=latest
+
           TIMESTAMP=$(date +'%Y-%m-%d')
           echo date=$TIMESTAMP > commit.properties
           echo commitId=$GITHUB_SHA >> commit.properties
           echo projectVersion=$VERSION>> commit.properties
-          
+
       - name: Build image
         run: docker build . --file Dockerfile --tag image
-        
+
       - name: Login to Docker Hub
         env:
           DOCKER_PASSWORD: ${{ secrets.REPO_PASSWORD }}
         run: |
-          echo "${DOCKER_PASSWORD}" | docker login $DOCKER_REPO --username "build-pipeline" --password-stdin   
+          echo "${DOCKER_PASSWORD}" | docker login $DOCKER_REPO --username "build-pipeline" --password-stdin
 
       - name: Push image
         run: |
@@ -89,8 +93,11 @@ jobs:
           # Strip "v" prefix from tag name
           [[ "${{ github.ref }}" == "refs/tags/"* ]] && VERSION=$(echo $VERSION | sed -e 's/^v//')
 
+          # Create a release snapshot if we are on release branch
+          [[ "${{ github.ref }}" == "refs/heads/release/"* ]] && VERSION=$(echo "${{ github.ref }}" | sed -e 's/refs\/heads\/release\/[v]//' | awk '{print $1"-SNAPSHOT"}')
+
           # Use Docker `latest` tag convention
-          [ "$VERSION" == "master" ] && VERSION=0.0.1-SNAPSHOT
+          [ "$VERSION" == "master" ] && VERSION=latest
 
           echo IMAGE_ID=$IMAGE_ID
           echo VERSION=$VERSION
@@ -98,6 +105,6 @@ jobs:
 
           docker tag image $IMAGE_ID:$VERSION
           docker push $IMAGE_ID:$VERSION
-          
+
           docker tag image $IMAGE_ID:$VERSION-$TIMESTAMP
-          docker push $IMAGE_ID:$VERSION-$TIMESTAMP            
+          docker push $IMAGE_ID:$VERSION-$TIMESTAMP

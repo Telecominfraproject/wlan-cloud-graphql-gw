@@ -521,6 +521,13 @@ const resolvers = {
 
       return result && result.value2;
     },
+    associatedSsidProfiles: ({ details }, args, { dataSources }) => {
+      const { associatedAccessSsidProfileIds, osuSsidProfileId } = details;
+      return (
+        associatedAccessSsidProfileIds &&
+        dataSources.api.getProfilesById([...associatedAccessSsidProfileIds, osuSsidProfileId])
+      );
+    },
   },
   ClientSession: {
     id: ({ macAddress }) => macAddress.addressAsString,

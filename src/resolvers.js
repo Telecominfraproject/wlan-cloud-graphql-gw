@@ -525,7 +525,7 @@ const resolvers = {
       const { associatedAccessSsidProfileIds } = details;
       return (
         associatedAccessSsidProfileIds &&
-        dataSources.api.getProfilesById([...associatedAccessSsidProfileIds])
+        dataSources.api.getProfilesById(associatedAccessSsidProfileIds)
       );
     },
   },

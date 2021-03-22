@@ -522,15 +522,16 @@ const resolvers = {
       return result && result.value2;
     },
     associatedSsidProfiles: ({ details }, args, { dataSources }) => {
-      const { associatedAccessSsidProfileIds } = details;
       return (
-        associatedAccessSsidProfileIds &&
-        dataSources.api.getProfilesById(associatedAccessSsidProfileIds)
+        details &&
+        details.associatedAccessSsidProfileIds &&
+        dataSources.api.getProfilesById(details.associatedAccessSsidProfileIds)
       );
     },
     osuSsidProfile: ({ details }, args, { dataSources }) => {
-      const { osuSsidProfileId } = details;
-      return osuSsidProfileId && dataSources.api.getProfile(osuSsidProfileId);
+      return (
+        details && details.osuSsidProfileId && dataSources.api.getProfile(details.osuSsidProfileId)
+      );
     },
   },
   ClientSession: {

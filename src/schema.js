@@ -232,6 +232,7 @@ const typeDefs = gql`
     equipmentCount: Int
     details: JSONObject
     associatedSsidProfiles: [Profile]
+    osuSsidProfile: Profile
   }
 
   type ProfilePagination {

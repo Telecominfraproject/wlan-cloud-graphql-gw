@@ -528,6 +528,10 @@ const resolvers = {
         dataSources.api.getProfilesById(associatedAccessSsidProfileIds)
       );
     },
+    osuSsidProfile: ({ details }, args, { dataSources }) => {
+      const { osuSsidProfileId } = details;
+      return osuSsidProfileId && dataSources.api.getProfile(osuSsidProfileId);
+    },
   },
   ClientSession: {
     id: ({ macAddress }) => macAddress.addressAsString,

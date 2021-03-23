@@ -204,9 +204,36 @@ export class API extends RESTDataSource {
   }
 
   async createProfile(profile) {
-    return this.post('portal/profile', {
+    const newProfile = await this.post('portal/profile', {
       ...profile,
     });
+
+    if (profile.profileType === 'passpoint') {
+      const {
+        id,
+        details: { associatedAccessSsidProfileIds, osuSsidProfileId },
+      } = newProfile;
+      this.get('portal/profile', {
+        profileId: osuSsidProfileId,
+      }).then((profile) => {
+        this.put('portal/profile', {
+          ...profile,
+          childProfileIds: [...profile.childProfileIds, id],
+        });
+      });
+      associatedAccessSsidProfileIds.forEach((profileId) => {
+        this.get('portal/profile', {
+          profileId,
+        }).then((profile) => {
+          this.put('portal/profile', {
+            ...profile,
+            childProfileIds: [...profile.childProfileIds, id],
+          });
+        });
+      });
+    }
+
+    return newProfile;
   }
   async getProfile(profileId) {
     return this.get('portal/profile', {
@@ -214,6 +241,35 @@ export class API extends RESTDataSource {
     });
   }
   async updateProfile(profile) {
+    if (profile.profileType === 'passpoint') {
+      const {
+        id,
+        details: { associatedAccessSsidProfileIds, osuSsidProfileId },
+      } = profile;
+      this.get('portal/profile', {
+        profileId: osuSsidProfileId,
+      }).then((profile) => {
+        if (!profile.childProfileIds.includes(parseInt(id, 10))) {
+          this.put('portal/profile', {
+            ...profile,
+            childProfileIds: [...profile.childProfileIds, id],
+          });
+        }
+      });
+      associatedAccessSsidProfileIds.forEach((profileId) => {
+        this.get('portal/profile', {
+          profileId,
+        }).then((profile) => {
+          if (!profile.childProfileIds.includes(parseInt(id, 10))) {
+            this.put('portal/profile', {
+              ...profile,
+              childProfileIds: [...profile.childProfileIds, id],
+            });
+          }
+        });
+      });
+    }
+
     return this.put('portal/profile', {
       ...profile,
     });

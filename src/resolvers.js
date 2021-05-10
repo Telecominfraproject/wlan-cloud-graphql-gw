@@ -381,7 +381,22 @@ const resolvers = {
   },
   Equipment: {
     baseMacAddress: ({ baseMacAddress }) => baseMacAddress && baseMacAddress.addressAsString,
-    manufacturer: ({ baseMacAddress }, args, { dataSources }) => {
+    manufacturer: async ({ customerId, id, baseMacAddress }, args, { dataSources }) => {
+      const manufacturerData = await dataSources.api.getEquipmentStatus(
+        customerId,
+        [id],
+        ['EQUIPMENT_MANUFACTURER_DATA']
+      );
+
+      if (
+        manufacturerData &&
+        manufacturerData[0] &&
+        manufacturerData[0].details &&
+        manufacturerData[0].details.manufacturerName
+      ) {
+        return manufacturerData[0].details.manufacturerName;
+      }
+
       return (
         baseMacAddress &&
         baseMacAddress.addressAsString &&

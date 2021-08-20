@@ -231,6 +231,17 @@ export class API extends RESTDataSource {
         this.get('portal/profile', {
           profileId: passpointProfileId.value,
         }).then((profile) => {
+          if (profile.details.osuSsidProfileId) {
+            this.get('portal/profile', {
+              profileId: profile.details.osuSsidProfileId,
+            }).then((ssidProfile) => {
+              this.put('portal/profile', {
+                ...ssidProfile,
+                childProfileIds: ssidProfile.childProfileIds.filter((i) => i !== profile.id),
+              });
+            });
+          }
+
           this.put('portal/profile', {
             ...profile,
             details: {
@@ -277,6 +288,17 @@ export class API extends RESTDataSource {
         this.get('portal/profile', {
           profileId: passpointProfileId.value,
         }).then((profile) => {
+          if (profile.details.osuSsidProfileId) {
+            this.get('portal/profile', {
+              profileId: profile.details.osuSsidProfileId,
+            }).then((ssidProfile) => {
+              this.put('portal/profile', {
+                ...ssidProfile,
+                childProfileIds: ssidProfile.childProfileIds.filter((i) => i !== profile.id),
+              });
+            });
+          }
+
           this.put('portal/profile', {
             ...profile,
             details: {
@@ -324,9 +346,38 @@ export class API extends RESTDataSource {
     });
   }
   async deleteProfile(profileId) {
-    return this.delete('portal/profile', {
+    const deletedProfile = await this.delete('portal/profile', {
       profileId,
     });
+
+    if (deletedProfile.profileType === 'ssid') {
+      if (deletedProfile.childProfileIds.length) {
+        const childProfiles = await this.get('portal/profile/inSet', {
+          profileIdSet: deletedProfile.childProfileIds,
+        });
+        const passpointProfile = childProfiles.find(
+          (profile) => profile.profileType === 'passpoint'
+        );
+        if (passpointProfile) {
+          this.put('portal/profile', {
+            ...passpointProfile,
+            details: {
+              ...passpointProfile.details,
+              ...(passpointProfile.details.osuSsidProfileId === parseInt(profileId, 10) && {
+                osuSsidProfileId: null,
+              }),
+              ...(passpointProfile.details.associatedAccessSsidProfileIds && {
+                associatedAccessSsidProfileIds: passpointProfile.details.associatedAccessSsidProfileIds.filter(
+                  (i) => i !== parseInt(profileId, 10)
+                ),
+              }),
+            },
+          });
+        }
+      }
+    }
+
+    return deletedProfile;
   }
   async getAllProfiles({ customerId, cursor, limit, type, context }) {
     return this.get('portal/profile/forCustomer', {

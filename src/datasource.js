@@ -267,6 +267,32 @@ export class API extends RESTDataSource {
         details: { passpointProfileId, passpointConfig },
       } = profile;
 
+      const oldProfile = await this.get('portal/profile', { profileId: id });
+      if (oldProfile.childProfileIds.length) {
+        const childProfiles = await this.get('portal/profile/inSet', {
+          profileIdSet: oldProfile.childProfileIds,
+        });
+        const passpointProfile = childProfiles.find(
+          (profile) => profile.profileType === 'passpoint'
+        );
+        if (passpointProfile) {
+          this.put('portal/profile', {
+            ...passpointProfile,
+            details: {
+              ...passpointProfile.details,
+              ...(passpointProfile.details.osuSsidProfileId === parseInt(id, 10) && {
+                osuSsidProfileId: null,
+              }),
+              ...(passpointProfile.details.associatedAccessSsidProfileIds && {
+                associatedAccessSsidProfileIds: passpointProfile.details.associatedAccessSsidProfileIds.filter(
+                  (i) => i !== parseInt(id, 10)
+                ),
+              }),
+            },
+          });
+        }
+      }
+
       if (passpointConfig === 'accessSSID') {
         this.get('portal/profile', {
           profileId: passpointProfileId.value,
@@ -312,32 +338,6 @@ export class API extends RESTDataSource {
             },
           });
         });
-      } else {
-        const oldProfile = await this.get('portal/profile', { profileId: id });
-        if (oldProfile.childProfileIds.length) {
-          const childProfiles = await this.get('portal/profile/inSet', {
-            profileIdSet: oldProfile.childProfileIds,
-          });
-          const passpointProfile = childProfiles.find(
-            (profile) => profile.profileType === 'passpoint'
-          );
-          if (passpointProfile) {
-            this.put('portal/profile', {
-              ...passpointProfile,
-              details: {
-                ...passpointProfile.details,
-                ...(passpointProfile.details.osuSsidProfileId === parseInt(id, 10) && {
-                  osuSsidProfileId: null,
-                }),
-                ...(passpointProfile.details.associatedAccessSsidProfileIds && {
-                  associatedAccessSsidProfileIds: passpointProfile.details.associatedAccessSsidProfileIds.filter(
-                    (i) => i !== parseInt(id, 10)
-                  ),
-                }),
-              },
-            });
-          }
-        }
       }
     }
 

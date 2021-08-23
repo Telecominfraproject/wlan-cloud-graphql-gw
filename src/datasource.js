@@ -264,80 +264,91 @@ export class API extends RESTDataSource {
     if (profile.profileType === 'ssid') {
       const {
         id,
-        details: { passpointProfileId, passpointConfig },
+        details: { passpointProfileId = {}, passpointConfig },
       } = profile;
 
       const oldProfile = await this.get('portal/profile', { profileId: id });
       if (oldProfile.childProfileIds.length) {
-        const childProfiles = await this.get('portal/profile/inSet', {
-          profileIdSet: oldProfile.childProfileIds,
-        });
+        const childProfiles =
+          (await this.get('portal/profile/inSet', {
+            profileIdSet: oldProfile.childProfileIds,
+          })) || [];
+
         const passpointProfile = childProfiles.find(
           (profile) => profile.profileType === 'passpoint'
         );
+
+        console.log(passpointProfileId.value);
         if (passpointProfile) {
-          this.put('portal/profile', {
-            ...passpointProfile,
-            details: {
-              ...passpointProfile.details,
-              ...(passpointProfile.details.osuSsidProfileId === parseInt(id, 10) && {
-                osuSsidProfileId: null,
-              }),
-              ...(passpointProfile.details.associatedAccessSsidProfileIds && {
-                associatedAccessSsidProfileIds: passpointProfile.details.associatedAccessSsidProfileIds.filter(
-                  (i) => i !== parseInt(id, 10)
-                ),
-              }),
-            },
-          });
+          if (
+            !passpointProfileId.value ||
+            passpointProfile.id !== parseInt(passpointProfileId.value, 10)
+          ) {
+            this.put('portal/profile', {
+              ...passpointProfile,
+              details: {
+                ...passpointProfile.details,
+                ...(passpointProfile.details.osuSsidProfileId === parseInt(id, 10) && {
+                  osuSsidProfileId: null,
+                }),
+                ...(passpointProfile.details.associatedAccessSsidProfileIds && {
+                  associatedAccessSsidProfileIds: passpointProfile.details.associatedAccessSsidProfileIds.filter(
+                    (i) => i !== parseInt(id, 10)
+                  ),
+                }),
+              },
+            });
+          }
         }
       }
 
-      if (passpointConfig === 'accessSSID') {
-        this.get('portal/profile', {
-          profileId: passpointProfileId.value,
-        }).then((profile) => {
-          this.put('portal/profile', {
-            ...profile,
-            details: {
-              ...profile.details,
-              ...(profile.details.osuSsidProfileId === parseInt(id, 10) && {
-                osuSsidProfileId: null,
-              }),
-              associatedAccessSsidProfileIds: profile.details.associatedAccessSsidProfileIds
-                ? [...profile.details.associatedAccessSsidProfileIds, id]
-                : [id],
-            },
-          });
-        });
-      } else if (passpointConfig === 'osuSSID') {
-        this.get('portal/profile', {
-          profileId: passpointProfileId.value,
-        }).then((profile) => {
-          if (profile.details.osuSsidProfileId) {
-            this.get('portal/profile', {
-              profileId: profile.details.osuSsidProfileId,
-            }).then((ssidProfile) => {
-              this.put('portal/profile', {
-                ...ssidProfile,
-                childProfileIds: ssidProfile.childProfileIds.filter((i) => i !== profile.id),
-              });
+      if (passpointProfileId.value) {
+        if (passpointConfig === 'accessSSID') {
+          this.get('portal/profile', {
+            profileId: passpointProfileId.value,
+          }).then((profile) => {
+            this.put('portal/profile', {
+              ...profile,
+              details: {
+                ...profile.details,
+                ...(profile.details.osuSsidProfileId === parseInt(id, 10) && {
+                  osuSsidProfileId: null,
+                }),
+                associatedAccessSsidProfileIds: profile.details.associatedAccessSsidProfileIds
+                  ? [...profile.details.associatedAccessSsidProfileIds, id]
+                  : [id],
+              },
             });
-          }
-
-          this.put('portal/profile', {
-            ...profile,
-            details: {
-              ...profile.details,
-              ...(profile.details.associatedAccessSsidProfileIds && {
-                associatedAccessSsidProfileIds: profile.details.associatedAccessSsidProfileIds.filter(
-                  (i) => i !== parseInt(id, 10)
-                ),
-              }),
-              osuSsidProfileId: id,
-            },
           });
-        });
+        } else if (passpointConfig === 'osuSSID') {
+          this.get('portal/profile', {
+            profileId: passpointProfileId.value,
+          }).then((profile) => {
+            if (profile.details.osuSsidProfileId) {
+              this.get('portal/profile', {
+                profileId: profile.details.osuSsidProfileId,
+              }).then((ssidProfile) => {
+                this.put('portal/profile', {
+                  ...ssidProfile,
+                  childProfileIds: ssidProfile.childProfileIds.filter((i) => i !== profile.id),
+                });
+              });
+            }
+
+            this.put('portal/profile', {
+              ...profile,
+              details: {
+                ...profile.details,
+                ...(profile.details.associatedAccessSsidProfileIds && {
+                  associatedAccessSsidProfileIds: profile.details.associatedAccessSsidProfileIds.filter(
+                    (i) => i !== parseInt(id, 10)
+                  ),
+                }),
+                osuSsidProfileId: id,
+              },
+            });
+          });
+        }
       }
     }
 
@@ -352,9 +363,11 @@ export class API extends RESTDataSource {
 
     if (deletedProfile.profileType === 'ssid') {
       if (deletedProfile.childProfileIds.length) {
-        const childProfiles = await this.get('portal/profile/inSet', {
-          profileIdSet: deletedProfile.childProfileIds,
-        });
+        const childProfiles =
+          (await this.get('portal/profile/inSet', {
+            profileIdSet: deletedProfile.childProfileIds,
+          })) || [];
+
         const passpointProfile = childProfiles.find(
           (profile) => profile.profileType === 'passpoint'
         );

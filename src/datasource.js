@@ -278,7 +278,6 @@ export class API extends RESTDataSource {
           (profile) => profile.profileType === 'passpoint'
         );
 
-        console.log(passpointProfileId.value);
         if (passpointProfile) {
           if (
             !passpointProfileId.value ||
